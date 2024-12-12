@@ -1,1 +1,4 @@
-/Users/CaseyStratton/.dotfiles/.config/nvim/lua/custom/plugins/vim-tmux-navigator.lua
+return {
+  'christoomey/vim-tmux-navigator',
+  lazy = false,
+}

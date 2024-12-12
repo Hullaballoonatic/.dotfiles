@@ -1,1 +1,9 @@
-/Users/CaseyStratton/.dotfiles/.config/nvim/lua/custom/plugins/window-picker.lua
+return {
+  's1n7ax/nvim-window-picker',
+  name = 'window-picker',
+  event = 'VeryLazy',
+  version = '2.*',
+  config = function()
+    require('window-picker').setup()
+  end,
+}

@@ -1,1 +1,3 @@
-/Users/CaseyStratton/.dotfiles/.config/nvim/lua/custom/plugins/copilot.lua
+return {
+    'github/copilot.vim',
+}

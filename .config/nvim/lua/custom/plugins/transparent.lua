@@ -1,1 +1,3 @@
-/Users/CaseyStratton/.dotfiles/.config/nvim/lua/custom/plugins/transparent.lua
+return {
+  'xiyaowong/transparent.nvim',
+}
