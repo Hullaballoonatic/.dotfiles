@@ -1,0 +1,1 @@
+/Users/CaseyStratton/.dotfiles/.config/nvim/lua/kickstart/plugins/neo-tree.lua

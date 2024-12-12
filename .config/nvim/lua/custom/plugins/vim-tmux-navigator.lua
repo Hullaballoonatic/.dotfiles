@@ -1,0 +1,1 @@
+/Users/CaseyStratton/.dotfiles/.config/nvim/lua/custom/plugins/vim-tmux-navigator.lua
