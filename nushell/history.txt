@@ -389,3 +389,5 @@ ls nvim
 git add .
 git rm --cached nvim
 git submodule add https://github.com/Hullaballoonatic/nvim.git nvim
+git commit -a -m 'set nvim as submodule'
+git push
