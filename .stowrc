@@ -1,0 +1,5 @@
+#--dir=~/.dotfiles/.config
+--target=~/.config
+--ignore=.git
+--ignore=.stowrc
+--ignore=.DS_Store
