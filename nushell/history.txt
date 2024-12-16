@@ -381,3 +381,11 @@ mkdir .dotfiles/atuin
 nvim .dotfiles/atuin/config.toml
 cd .dotfiles
 git add .
+git commit -a -m "add back all the configs..."
+git push
+git rm --cached nvim
+ls
+ls nvim
+git add .
+git rm --cached nvim
+git submodule add https://github.com/Hullaballoonatic/nvim.git nvim
