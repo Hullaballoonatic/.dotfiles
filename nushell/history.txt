@@ -381,6 +381,7 @@ mkdir .dotfiles/atuin
 nvim .dotfiles/atuin/config.toml
 cd .dotfiles
 git add .
+<<<<<<< HEAD
 git commit -a -m "add back all the configs..."
 git push
 git rm --cached nvim
@@ -393,3 +394,7 @@ git commit -a -m 'set nvim as submodule'
 git push
 git commit -a -m 'remove submodule. leave nvim as just dotfile config'
 git push
+=======
+>>>>>>> parent of 258b2ac (set nvim as submodule)
+nvim .gitignore
+git revert HEAD~2
