@@ -1,6 +1,0 @@
-git commit -a "remove history.txt from repo"
-git commit -a -m "remove history.txt from repo"
-cd .dotfiles
-git commit -a -m "remove history.txt from repo"
-git push
-nvim .gitignore
