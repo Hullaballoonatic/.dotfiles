@@ -2,6 +2,17 @@
 #
 # version = "0.100.0"
 
+# yazi (directory explorer)
+def --env y [...args] {
+    let tmp = (mktemp -t "yazi-cwd.XXXXXX")
+    yazi ...$args --cwd-file $tmp
+    let cwd = (open $tmp)
+    if $cwd != "" and $cwd != $env.PWD {
+        cd $cwd
+    }
+    rm -fp $tmp
+}
+
 # For more information on defining custom themes, see
 # https://www.nushell.sh/book/coloring_and_theming.html
 # And here is the theme collection
@@ -911,3 +922,4 @@ source ~/.local/share/atuin/init.nu
 if ($env | find TMUX | is-empty) {
     tmux new-session -A -s "Default"
 }
+

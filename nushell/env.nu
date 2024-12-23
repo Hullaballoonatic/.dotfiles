@@ -97,7 +97,14 @@ $env.NU_PLUGIN_DIRS = [
 # path add ($env.HOME | path join ".local" "bin")
 # $env.PATH = ($env.PATH | uniq)
 
-$env.PATH = ($env.PATH | split row (char esep) | prepend '/usr/local/bin' | prepend '/opt/homebrew/bin')
+$env.PATH = (
+    $env.PATH
+    | split row (char esep)
+    | prepend '/usr/local/bin'
+    | prepend '/opt/homebrew/bin'
+    | prepend '/Users/CaseyStratton/google-cloud-sdk/bin'
+    | uniq
+) 
 
 # To load from a custom file you can use:
 # source ($nu.default-config-dir | path join 'custom.nu')
@@ -110,3 +117,4 @@ starship init nu | save -f ~/.cache/starship/init.nu
 $env.CARAPACE_BRIDGES = 'zsh,fish,bash,inshellisense'
 mkdir ~/.cache/carapace
 carapace _carapace nushell | save --force ~/.cache/carapace/init.nu
+
