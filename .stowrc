@@ -1,5 +1,8 @@
-#--dir=~/.dotfiles/.config
---target=~/.config
+--target=~
 --ignore=.git
 --ignore=.stowrc
 --ignore=.DS_Store
+--ignore=README.md
+--ignore=bootstrap.sh
+--ignore=bootstrap.bat
+
