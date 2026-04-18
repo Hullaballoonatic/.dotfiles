@@ -1,3 +1,6 @@
 [flavor]
+light = "noctalia"
 use = "catppuccin-mocha"
-dark = "catppuccin-mocha"
+light = "noctalia"
+dark  = "noctalia"
+light = "noctalia"

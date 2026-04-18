@@ -100,9 +100,9 @@ $env.NU_PLUGIN_DIRS = [
 $env.PATH = (
     $env.PATH
     | split row (char esep)
-    | prepend '/usr/local/bin'
+    | prepend '/home/casey/.sdkman/candidates/java/current/bin'
+    | prepend '/home/casey'
     | prepend '/opt/homebrew/bin'
-    | prepend '/Users/CaseyStratton/google-cloud-sdk/bin'
     | uniq
 ) 
 

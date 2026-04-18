@@ -100,10 +100,13 @@ if [[ "$OS" == "Linux" ]]; then
     atuin
     starship
     nushell
+    wofi
+    waybar
   )
 
   AUR_PACKAGES=(
     carapace-bin
+    eww
   )
 
   log "Refreshing package database..."
@@ -113,7 +116,7 @@ if [[ "$OS" == "Linux" ]]; then
   sudo pacman -S --needed --noconfirm "${PACKAGES[@]}"
 
   log "Installing packages: ${AUR_PACKAGES[*]}"
-  sudo yay -S --needed --noconfirm "${AUR_PACKAGES[@]}"
+  yay -S --needed --noconfirm "${AUR_PACKAGES[@]}"
 fi
 
 curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
