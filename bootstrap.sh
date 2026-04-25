@@ -144,9 +144,9 @@ log "Applying dotfiles with: stow home"
   cd "$REPO_DIR"
   # Explicitly set dir/target so this works even if .stowrc changes
   if [[ "$OS" == "Darwin" ]]; then
-    stow -d "$REPO_DIR" -t "$HOME" --ignore='\.linux' home
+    stow -d "$REPO_DIR" -t "$HOME" --ignore='config.linux' home
   else
-    stow -d "$REPO_DIR" -t "$HOME" --ignore='\.macos' home
+    stow -d "$REPO_DIR" -t "$HOME" --ignore='config.macos' home
   fi
 )
 
