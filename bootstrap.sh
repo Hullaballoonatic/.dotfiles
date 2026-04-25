@@ -118,7 +118,11 @@ log "Applying dotfiles with: stow home"
 (
   cd "$REPO_DIR"
   # Explicitly set dir/target so this works even if .stowrc changes
-  stow -d "$REPO_DIR" -t "$HOME" home
+  if [[ "$OS" == "Darwin" ]]; then
+    stow -d "$REPO_DIR" -t "$HOME" --ignore='\.linux' home
+  else
+    stow -d "$REPO_DIR" -t "$HOME" --ignore='\.macos' home
+  fi
 )
 
 log "Bootstrap complete."

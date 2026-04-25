@@ -47,9 +47,8 @@
 # # which is explained in the docs for that config option.
 # # Just for example:
 # resize-overlay-duration = 4s 200ms
-env = SHELL=/usr/bin/nu
-
-command = tmux new-session -A -s Default
+# Shared Ghostty configuration
+env = SHELL=nu
 
 background = #1e1e2e
 
@@ -58,4 +57,6 @@ window-padding-y = 8
 
 app-notifications = no-clipboard-copy
 
-theme = noctalia
+# Load platform-specific configuration
+config-file = ?config.macos
+config-file = ?config.linux
