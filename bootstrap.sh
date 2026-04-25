@@ -14,6 +14,23 @@ abort() {
   exit 1
 }
 
+# ----------------------------------------
+# Parse arguments
+# ----------------------------------------
+
+SKIP_INSTALL=false
+
+for arg in "$@"; do
+  case "$arg" in
+    -s|--skip-install)
+      SKIP_INSTALL=true
+      ;;
+    *)
+      abort "Unknown argument: $arg"
+      ;;
+  esac
+done
+
 # Repo directory (where this script lives)
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
@@ -36,79 +53,87 @@ case "$OS" in
 esac
 
 # ----------------------------------------
-# macOS branch (Homebrew)
+# Installation steps (unless --skip-install)
 # ----------------------------------------
-if [[ "$OS" == "Darwin" ]]; then
-  # CLI tools via brew formulae
-  BREW_FORMULAE=(
-    stow
-    neovim
-    yazi
-    htop
-    atuin
-    starship
-    nushell
-    carapace
-  )
 
-  # GUI / app via casks
-  BREW_CASKS=(
-    ghostty
-  )
+if [[ "$SKIP_INSTALL" == false ]]; then
+  # ----------------------------------------
+  # macOS branch (Homebrew)
+  # ----------------------------------------
+  if [[ "$OS" == "Darwin" ]]; then
+    # CLI tools via brew formulae
+    BREW_FORMULAE=(
+      stow
+      neovim
+      yazi
+      htop
+      atuin
+      starship
+      nushell
+      carapace
+    )
 
-  log "Updating Homebrew..."
-  brew update
+    # GUI / app via casks
+    BREW_CASKS=(
+      ghostty
+    )
 
-  log "Installing formulae: ${BREW_FORMULAE[*]}"
-  brew install "${BREW_FORMULAE[@]}"
+    log "Updating Homebrew..."
+    brew update
 
-  log "Installing casks: ${BREW_CASKS[*]}"
-  brew install --cask "${BREW_CASKS[@]}"
-fi
+    log "Installing formulae: ${BREW_FORMULAE[*]}"
+    brew install "${BREW_FORMULAE[@]}"
 
-# ----------------------------------------
-# Linux (Arch / Arch-based) branch
-# ----------------------------------------
-if [[ "$OS" == "Linux" ]]; then
-  if [[ -r /etc/os-release ]]; then
-    # shellcheck disable=SC1091
-    source /etc/os-release
-  else
-    abort "/etc/os-release not found; cannot determine distro."
+    log "Installing casks: ${BREW_CASKS[*]}"
+    brew install --cask "${BREW_CASKS[@]}"
   fi
 
-  if [[ "${ID:-}" != "arch" && "${ID_LIKE:-}" != *"arch"* ]]; then
-    abort "This bootstrap script currently only supports Arch or Arch-based distros."
+  # ----------------------------------------
+  # Linux (Arch / Arch-based) branch
+  # ----------------------------------------
+  if [[ "$OS" == "Linux" ]]; then
+    if [[ -r /etc/os-release ]]; then
+      # shellcheck disable=SC1091
+      source /etc/os-release
+    else
+      abort "/etc/os-release not found; cannot determine distro."
+    fi
+
+    if [[ "${ID:-}" != "arch" && "${ID_LIKE:-}" != *"arch"* ]]; then
+      abort "This bootstrap script currently only supports Arch or Arch-based distros."
+    fi
+
+    log "Arch or Arch-like distro detected. Using pacman."
+
+    PACKAGES=(
+      stow
+      neovim
+      ghostty
+      yazi
+      htop
+      atuin
+      starship
+      nushell
+    )
+
+    AUR_PACKAGES=(
+      carapace-bin
+    )
+
+    log "Refreshing package database..."
+    sudo pacman -Sy --noconfirm
+
+    log "Installing packages: ${PACKAGES[*]}"
+    sudo pacman -S --needed --noconfirm "${PACKAGES[@]}"
+
+    log "Installing packages: ${AUR_PACKAGES[*]}"
+    yay -S --needed --noconfirm "${AUR_PACKAGES[@]}"
   fi
 
-  log "Arch or Arch-like distro detected. Using pacman."
-
-  PACKAGES=(
-    stow
-    neovim
-    ghostty
-    yazi
-    htop
-    atuin
-    starship
-    nushell
-  )
-
-  AUR_PACKAGES=(
-    carapace-bin
-  )
-
-  log "Refreshing package database..."
-  sudo pacman -Sy --noconfirm
-
-  log "Installing packages: ${PACKAGES[*]}"
-  sudo pacman -S --needed --noconfirm "${PACKAGES[@]}"
-
-  log "Installing packages: ${AUR_PACKAGES[*]}"
-  yay -S --needed --noconfirm "${AUR_PACKAGES[@]}"
+  curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
+else
+  log "Skipping installation steps (--skip-install flag detected)."
 fi
-
-curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
 
 # ----------------------------------------
 # Apply dotfiles via stow

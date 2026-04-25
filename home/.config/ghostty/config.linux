@@ -1,0 +1,4 @@
+# Linux-specific Ghostty configuration
+command = /usr/bin/tmux new-session -A -s Default
+
+theme = noctalia
