@@ -14,10 +14,6 @@ abort() {
   exit 1
 }
 
-has_cmd() {
-  command -v "$1" >/dev/null 2>&1
-}
-
 # Repo directory (where this script lives)
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
@@ -87,10 +83,6 @@ if [[ "$OS" == "Linux" ]]; then
 
   log "Arch or Arch-like distro detected. Using pacman."
 
-  if ! has_cmd pacman; then
-    abort "pacman not found in PATH, but distro claims to be Arch-based."
-  fi
-
   PACKAGES=(
     stow
     neovim
@@ -100,13 +92,10 @@ if [[ "$OS" == "Linux" ]]; then
     atuin
     starship
     nushell
-    wofi
-    waybar
   )
 
   AUR_PACKAGES=(
     carapace-bin
-    eww
   )
 
   log "Refreshing package database..."
