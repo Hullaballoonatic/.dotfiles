@@ -50,6 +50,8 @@
 # Shared Ghostty configuration
 env = SHELL=nu
 
+command = tmux new-session -A -s Default
+
 background = #1e1e2e
 
 window-padding-x = 8
@@ -57,6 +59,4 @@ window-padding-y = 8
 
 app-notifications = no-clipboard-copy
 
-# Load platform-specific configuration
-config-file = ?config.macos
-config-file = ?config.linux
+config-file = ?config.platform.ghostty

@@ -1,4 +1,4 @@
-.DS_Store
+.DS_Store*
 tmux/plugins/
 fzf
 history.txt

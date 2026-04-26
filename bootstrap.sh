@@ -139,16 +139,15 @@ fi
 # Apply dotfiles via stow
 # ----------------------------------------
 
-log "Applying dotfiles with: stow home"
-(
-  cd "$REPO_DIR"
-  # Explicitly set dir/target so this works even if .stowrc changes
-  if [[ "$OS" == "Darwin" ]]; then
-    stow -d "$REPO_DIR" -t "$HOME" --ignore='config.linux' home
-  else
-    stow -d "$REPO_DIR" -t "$HOME" --ignore='config.macos' home
-  fi
-)
+log "Stowing common dotfiles with: stow --no-folding home"
+stow -d "$REPO_DIR" -t "$HOME" --no-folding -D home 2>/dev/null || true
+
+stow -d "$REPO_DIR" -t "$HOME" --no-folding home
+
+PLATFORM_NAME="$(uname -s | tr A-Z a-z)"
+
+log "Stowing platform-specific dot-files ($PLATFORM_NAME)"
+stow -d "$REPO_DIR/$PLATFORM_NAME" -t "$HOME" --no-folding home
 
 log "Bootstrap complete."
 
