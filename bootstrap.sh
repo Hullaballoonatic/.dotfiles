@@ -139,15 +139,13 @@ fi
 # Apply dotfiles via stow
 # ----------------------------------------
 
-log "Stowing common dotfiles with: stow --no-folding home"
-stow -d "$REPO_DIR" -t "$HOME" --no-folding -D home 2>/dev/null || true
+log "Stowing common dot-files"
+stow -d "$REPO_DIR" -t "$HOME" -R --no-folding --dotfiles home
 
-stow -d "$REPO_DIR" -t "$HOME" --no-folding home
+PLATFORM_DIR="$REPO_DIR/platform/$(uname -s | tr A-Z a-z)"
 
-PLATFORM_NAME="$(uname -s | tr A-Z a-z)"
-
-log "Stowing platform-specific dot-files ($PLATFORM_NAME)"
-stow -d "$REPO_DIR/$PLATFORM_NAME" -t "$HOME" --no-folding home
+log "Stowing platform-specific dot-files"
+stow -d "$PLATFORM_DIR" -t "$HOME" --no-folding --dotfiles home
 
 log "Bootstrap complete."
 
