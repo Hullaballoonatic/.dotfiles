@@ -1,0 +1,4 @@
+command = tmux new-session -A -s Default
+
+theme = Noctalia
+
