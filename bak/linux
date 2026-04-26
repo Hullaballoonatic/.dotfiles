@@ -1,4 +1,0 @@
-# arch-specific Ghostty configuration
-command = tmux new-session -A -s Default
-
-theme = noctalia

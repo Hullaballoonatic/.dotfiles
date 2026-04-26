@@ -1,4 +1,0 @@
-# macOS-specific Ghostty configuration
-command = /opt/homebrew/bin/tmux new-session -A -s Default
-
-macos-window-buttons = hidden
