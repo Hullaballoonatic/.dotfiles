@@ -104,18 +104,17 @@ $env.PATH = (
     | prepend '/home/casey/.local/bin'
     | prepend '/home/casey/.sdkman/candidates/java/current/bin'
     | prepend '/opt/homebrew/bin'
+    | sort
     | uniq
 ) 
 
 # To load from a custom file you can use:
 # source ($nu.default-config-dir | path join 'custom.nu')
 
-# starship initialization (line)
-mkdir ~/.cache/starship
-starship init nu | save -f ~/.cache/starship/init.nu
-
-# carapace initialization (completion)
-$env.CARAPACE_BRIDGES = 'zsh,fish,bash,inshellisense'
-mkdir ~/.cache/carapace
-carapace _carapace nushell | save --force ~/.cache/carapace/init.nu
+# $env.CARAPACE_BRIDGES = 'zsh,fish,bash,inshellisense' # optional
+if ($nu.cache-dir | find | is-empty) {
+    print "generating carapace cache"
+    mkdir $"($nu.cache-dir)"
+    carapace _carapace nushell | save --force $"($nu.cache-dir)/carapace.nu" | do { clear }
+}
 

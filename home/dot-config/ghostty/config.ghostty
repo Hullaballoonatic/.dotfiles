@@ -50,7 +50,6 @@
 # Shared Ghostty configuration
 env = SHELL=nu
 
-
 background = #1e1e2e
 
 window-padding-x = 8
