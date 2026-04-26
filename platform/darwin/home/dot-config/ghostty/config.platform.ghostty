@@ -1,6 +1,4 @@
 env = XDG_CONFIG_HOME=$HOME/.config/
 env = PATH=$PATH:/opt/homebrew/bin
 
-command = /opt/homebrew/bin/tmux new-session -A -s Default
-
 macos-window-buttons = hidden

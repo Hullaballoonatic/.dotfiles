@@ -48,7 +48,11 @@
 # # Just for example:
 # resize-overlay-duration = 4s 200ms
 # Shared Ghostty configuration
+config-file = ?config.platform.ghostty
+
 env = SHELL=nu
+
+command = tmux new-session -A -s Default
 
 background = #1e1e2e
 
@@ -57,4 +61,3 @@ window-padding-y = 8
 
 app-notifications = no-clipboard-copy
 
-config-file = ?config.platform.ghostty
