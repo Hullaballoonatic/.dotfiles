@@ -104,7 +104,6 @@ $env.PATH = (
     | prepend '/home/casey/.local/bin'
     | prepend '/home/casey/.sdkman/candidates/java/current/bin'
     | prepend '/opt/homebrew/bin'
-    | sort
     | uniq
 ) 
 
