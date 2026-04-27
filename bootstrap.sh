@@ -71,6 +71,7 @@ if [[ "$SKIP_INSTALL" == false ]]; then
       starship
       nushell
       carapace
+      tree-sitter-cli
     )
 
     # GUI / app via casks
@@ -114,6 +115,7 @@ if [[ "$SKIP_INSTALL" == false ]]; then
       atuin
       starship
       nushell
+      tree-sitter-cli
     )
 
     AUR_PACKAGES=(
