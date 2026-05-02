@@ -76,8 +76,6 @@ rules = [
 	{ mime = "*/javascript", use = [ "edit", "reveal" ] },
 	# Empty file
 	{ mime = "inode/empty", use = [ "edit", "reveal" ] },
-	# Shell
-{ url = "*.sh",  }
 	# Fallback
 	{ name = "*", use = [ "open", "reveal" ] },
 ]
