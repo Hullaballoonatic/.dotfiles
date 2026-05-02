@@ -2,3 +2,5 @@ env = XDG_CONFIG_HOME=$HOME/.config/
 env = PATH=$PATH:/opt/homebrew/bin
 
 macos-window-buttons = hidden
+
+theme = Catpuccin Mocha

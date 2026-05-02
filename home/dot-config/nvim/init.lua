@@ -646,8 +646,7 @@ require('lazy').setup({
             },
           },
         },
-        require 'custom.lsp',
-      })
+      }, require 'custom.lsp')
 
       -- Ensure the servers and tools above are installed
       --

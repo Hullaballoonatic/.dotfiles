@@ -37,7 +37,6 @@ REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # ----------------------------------------
 # OS detection
 # ----------------------------------------
-
 OS="$(uname -s)"
 
 case "$OS" in
@@ -119,7 +118,8 @@ if [[ "$SKIP_INSTALL" == false ]]; then
     )
 
     AUR_PACKAGES=(
-      carapace-bin
+      carapace-bin,
+      topgrade
     )
 
     log "Refreshing package database..."
@@ -143,7 +143,7 @@ fi
 log "Stowing global dot-files"
 stow -d "$REPO_DIR" -t "$HOME" -R --adopt --no-folding --dotfiles home
 
-PLATFORM = "$(uname -s | tr A-Z a-z)"
+PLATFORM="$(uname -s | tr A-Z a-z)"
 PLATFORM_DIR="$REPO_DIR/platform/$PLATFORM"
 
 log "Stowing $PLATFORM-specific dot-files"
