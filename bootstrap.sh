@@ -71,6 +71,7 @@ if [[ "$SKIP_INSTALL" == false ]]; then
       nushell
       carapace
       tree-sitter-cli
+      topgrade
     )
 
     # GUI / app via casks
