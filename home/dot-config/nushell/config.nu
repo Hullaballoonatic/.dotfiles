@@ -921,4 +921,3 @@ source ~/.cache/carapace/init.nu
 
 # atuin (history)
 source ~/.local/share/atuin/init.nu
-

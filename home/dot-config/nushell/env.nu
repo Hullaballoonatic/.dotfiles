@@ -117,3 +117,5 @@ if ($nu.cache-dir | find | is-empty) {
     carapace _carapace nushell | save --force $"($nu.cache-dir)/carapace.nu" | do { clear }
 }
 
+$env.EDITOR = 'nvim'
+
