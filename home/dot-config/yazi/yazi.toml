@@ -55,6 +55,9 @@ play = [
 	{ run = 'mpv --force-window %*', orphan = true, for = "windows" },
 	{ run = '''mediainfo "$1"; echo "Press enter to exit"; read _''', block = true, desc = "Show media info", for = "unix" },
 ]
+bash = [
+	{ run = "sh %s", block = true, for = "unix" }
+]
 
 [open]
 rules = [
@@ -73,6 +76,8 @@ rules = [
 	{ mime = "*/javascript", use = [ "edit", "reveal" ] },
 	# Empty file
 	{ mime = "inode/empty", use = [ "edit", "reveal" ] },
+	# Shell
+{ url = "*.sh",  }
 	# Fallback
 	{ name = "*", use = [ "open", "reveal" ] },
 ]

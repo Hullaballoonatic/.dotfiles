@@ -132,7 +132,7 @@ if [[ "$SKIP_INSTALL" == false ]]; then
     yay -S --needed --noconfirm "${AUR_PACKAGES[@]}"
   fi
 
-  curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
+  curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh || true
 else
   log "Skipping installation steps (--skip-install flag detected)."
 fi
@@ -140,14 +140,14 @@ fi
 # ----------------------------------------
 # Apply dotfiles via stow
 # ----------------------------------------
+log "Stowing global dot-files"
+stow -d "$REPO_DIR" -t "$HOME" -R --adopt --no-folding --dotfiles home
 
-log "Stowing common dot-files"
-stow -d "$REPO_DIR" -t "$HOME" -R --no-folding --dotfiles home
+PLATFORM = "$(uname -s | tr A-Z a-z)"
+PLATFORM_DIR="$REPO_DIR/platform/$PLATFORM"
 
-PLATFORM_DIR="$REPO_DIR/platform/$(uname -s | tr A-Z a-z)"
-
-log "Stowing platform-specific dot-files"
-stow -d "$PLATFORM_DIR" -t "$HOME" --no-folding --dotfiles home
+log "Stowing $PLATFORM-specific dot-files"
+stow -d "$PLATFORM_DIR" -t "$HOME" --adopt --no-folding --dotfiles home
 
 log "Bootstrap complete."
 
