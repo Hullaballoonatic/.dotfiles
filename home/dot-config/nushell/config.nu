@@ -13,6 +13,14 @@ def --env y [...args] {
     rm -fp $tmp
 }
 
+def sdk [...args: string] {
+  run-bash 'source "$HOME/.sdkman/bin/sdkman-init.sh" && sdk "$@"' ...$args
+}
+
+def run-bash [script: string, ...args: string] {
+  ^bash -lc $script bash ...$args
+}
+
 # For more information on defining custom themes, see
 # https://www.nushell.sh/book/coloring_and_theming.html
 # And here is the theme collection

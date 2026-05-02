@@ -1,2 +1,4 @@
+env = PATH=$PATH:/usr/bin/nu
+
 theme = Noctalia
 
