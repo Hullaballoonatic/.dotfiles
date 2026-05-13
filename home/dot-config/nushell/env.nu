@@ -100,10 +100,7 @@ $env.NU_PLUGIN_DIRS = [
 $env.PATH = (
     $env.PATH
     | split row (char esep)
-    | prepend '/home/casey'
-    | prepend '/home/casey/.local/bin'
-    | prepend '/home/casey/.sdkman/candidates/java/current/bin'
-    | prepend '/opt/homebrew/bin'
+    # | prepend '/home/casey'
     | uniq
 ) 
 
