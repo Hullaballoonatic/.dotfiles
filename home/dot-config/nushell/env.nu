@@ -86,6 +86,17 @@ $env.NU_PLUGIN_DIRS = [
     ($nu.default-config-dir | path join 'plugins') # add <nushell-config-dir>/plugins
 ]
 
+# fnm
+load-env (fnm env --shell bash
+    | lines
+    | str replace 'export ' ''
+    | str replace -a '"' ''
+    | split column "="
+    | rename name value
+    | where name != "FNM_ARCH" and name != "PATH"
+    | reduce -f {} {|it, acc| $acc | upsert $it.name $it.value }
+)
+
 # To add entries to PATH (on Windows you might use Path), you can use the following pattern:
 # $env.PATH = ($env.PATH | split row (char esep) | prepend '/some/path')
 # An alternate way to add entries to $env.PATH is to use the custom command `path add`
@@ -96,11 +107,16 @@ $env.NU_PLUGIN_DIRS = [
 # path add ($env.CARGO_HOME | path join "bin")
 # path add ($env.HOME | path join ".local" "bin")
 # $env.PATH = ($env.PATH | uniq)
-
 $env.PATH = (
     $env.PATH
     | split row (char esep)
-    # | prepend '/home/casey'
+    | prepend $"($env.FNM_MULTISHELL_PATH)/bin"
+    | prepend '/home/casey'
+    | prepend '/home/casey/.local/bin'
+    | prepend '/home/casey/.sdkman/candidates/java/current/bin'
+    | prepend '/opt/homebrew/bin'
+    | prepend '/bin'
+    | prepend '/usr/bin'
     | uniq
 ) 
 
