@@ -62,16 +62,17 @@ if [[ "$SKIP_INSTALL" == false ]]; then
   if [[ "$OS" == "Darwin" ]]; then
     # CLI tools via brew formulae
     BREW_FORMULAE=(
-      stow
-      neovim
-      yazi
-      htop
       atuin
-      starship
-      nushell
       carapace
-      tree-sitter-cli
+      fnm
+      htop
+      neovim
+      nushell
+      starship
+      stow
       topgrade
+      tree-sitter-cli
+      yazi
     )
 
     # GUI / app via casks
@@ -107,15 +108,16 @@ if [[ "$SKIP_INSTALL" == false ]]; then
     log "Arch or Arch-like distro detected. Using pacman."
 
     PACKAGES=(
-      stow
-      neovim
-      ghostty
-      yazi
-      htop
       atuin
-      starship
+      fnm
+      ghostty
+      htop
+      neovim
       nushell
+      starship
+      stow
       tree-sitter-cli
+      yazi
     )
 
     AUR_PACKAGES=(
