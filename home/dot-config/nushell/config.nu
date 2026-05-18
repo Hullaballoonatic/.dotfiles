@@ -2,25 +2,6 @@
 #
 # version = "0.100.0"
 
-# yazi (directory explorer)
-def --env y [...args] {
-    let tmp = (mktemp -t "yazi-cwd.XXXXXX")
-    yazi ...$args --cwd-file $tmp
-    let cwd = (open $tmp)
-    if $cwd != "" and $cwd != $env.PWD {
-        cd $cwd
-    }
-    rm -fp $tmp
-}
-
-def sdk [...args: string] {
-  run-bash 'source "$HOME/.sdkman/bin/sdkman-init.sh" && sdk "$@"' ...$args
-}
-
-def run-bash [script: string, ...args: string] {
-  ^bash -lc $script bash ...$args
-}
-
 # For more information on defining custom themes, see
 # https://www.nushell.sh/book/coloring_and_theming.html
 # And here is the theme collection
@@ -912,9 +893,29 @@ $env.config = {
     ]
 }
 
+# yazi (directory explorer)
+def --env y [...args] {
+    let tmp = (mktemp -t "yazi-cwd.XXXXXX")
+    yazi ...$args --cwd-file $tmp
+    let cwd = (open $tmp)
+    if $cwd != "" and $cwd != $env.PWD {
+        cd $cwd
+    }
+    rm -fp $tmp
+}
+
+# sdkman
+def sdk [...args: string] {
+  run-bash 'source "$HOME/.sdkman/bin/sdkman-init.sh" && sdk "$@"' ...$args
+}
+
+def run-bash [script: string, ...args: string] {
+  ^bash -lc $script bash ...$args
+}
+
 # starship starting (line)
-mkdir ($nu.data-dir | path join "vendor/autoload")
-starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
+#mkdir ($nu.data-dir | path join "vendor/autoload")
+#starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
 
 # carapace starting (completion)
 source ~/.cache/carapace/init.nu

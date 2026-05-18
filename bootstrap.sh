@@ -68,6 +68,8 @@ if [[ "$SKIP_INSTALL" == false ]]; then
       htop
       neovim
       nushell
+      pyenv
+      sesh
       starship
       stow
       topgrade
@@ -121,7 +123,8 @@ if [[ "$SKIP_INSTALL" == false ]]; then
     )
 
     AUR_PACKAGES=(
-      carapace-bin,
+      carapace-bin
+      sesh-bin
       topgrade
     )
 
@@ -133,9 +136,10 @@ if [[ "$SKIP_INSTALL" == false ]]; then
 
     log "Installing packages: ${AUR_PACKAGES[*]}"
     yay -S --needed --noconfirm "${AUR_PACKAGES[@]}"
+
+    curl -fsSL https://pyenv.run | bash
   fi
 
-  curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh || true
 else
   log "Skipping installation steps (--skip-install flag detected)."
 fi
@@ -153,4 +157,3 @@ log "Stowing $PLATFORM-specific dot-files"
 stow -d "$PLATFORM_DIR" -t "$HOME" --adopt --no-folding --dotfiles home
 
 log "Bootstrap complete."
-

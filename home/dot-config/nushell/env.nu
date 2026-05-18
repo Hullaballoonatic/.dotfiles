@@ -97,6 +97,9 @@ load-env (fnm env --shell bash
     | reduce -f {} {|it, acc| $acc | upsert $it.name $it.value }
 )
 
+# pyenv
+$env.PYENV_ROOT = "~/.pyenv" | path expand
+ 
 # To add entries to PATH (on Windows you might use Path), you can use the following pattern:
 # $env.PATH = ($env.PATH | split row (char esep) | prepend '/some/path')
 # An alternate way to add entries to $env.PATH is to use the custom command `path add`
@@ -114,6 +117,8 @@ $env.PATH = (
     | prepend '/home/casey'
     | prepend '/home/casey/.local/bin'
     | prepend '/home/casey/.sdkman/candidates/java/current/bin'
+    | prepend $"($env.PYENV_ROOT)/bin"
+    | prepend $"(pyenv root)/shims"
     | prepend '/opt/homebrew/bin'
     | prepend '/bin'
     | prepend '/usr/bin'
