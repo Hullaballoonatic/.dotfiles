@@ -118,7 +118,7 @@ $env.PATH = (
     | prepend '/home/casey/.local/bin'
     | prepend '/home/casey/.sdkman/candidates/java/current/bin'
     | prepend $"($env.PYENV_ROOT)/bin"
-    | prepend $"(pyenv root)/shims"
+    | prepend $"($env.PYENV_ROOT)/shims"
     | prepend '/opt/homebrew/bin'
     | prepend '/bin'
     | prepend '/usr/bin'
