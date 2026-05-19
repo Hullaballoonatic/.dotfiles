@@ -1,2 +1,2 @@
 env = XDG_CONFIG_HOME=/Users/CaseyStratton/.config/
-env = PATH=/opt/homebrew/bin:$PATH
+env = PATH=/opt/homebrew/bin

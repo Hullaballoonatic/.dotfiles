@@ -113,15 +113,15 @@ $env.PYENV_ROOT = "~/.pyenv" | path expand
 $env.PATH = (
     $env.PATH
     | split row (char esep)
-    | prepend $"($env.FNM_MULTISHELL_PATH)/bin"
-    | prepend '/home/casey'
-    | prepend '/home/casey/.local/bin'
-    | prepend '/home/casey/.sdkman/candidates/java/current/bin'
-    | prepend $"($env.PYENV_ROOT)/bin"
-    | prepend $"($env.PYENV_ROOT)/shims"
-    | prepend '/opt/homebrew/bin'
     | prepend '/bin'
     | prepend '/usr/bin'
+    | prepend $env.HOME
+    | prepend ($env.HOME | path join ".local" "bin")
+    | prepend ($env.HOME | path join ".sdkman" "candidates" "java" "current" "bin")
+    | prepend ($env.FNM_MULTISHELL_PATH | path join "bin")
+    | prepend ($env.PYENV_ROOT | path join "bin")
+    | prepend ($env.PYENV_ROOT | path join "shims")
+    | sort
     | uniq
 ) 
 
