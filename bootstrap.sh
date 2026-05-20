@@ -75,6 +75,7 @@ if [[ "$SKIP_INSTALL" == false ]]; then
       topgrade
       tree-sitter-cli
       yazi
+      zoxide
     )
 
     # GUI / app via casks
@@ -120,6 +121,7 @@ if [[ "$SKIP_INSTALL" == false ]]; then
       stow
       tree-sitter-cli
       yazi
+      zoxide
     )
 
     AUR_PACKAGES=(
