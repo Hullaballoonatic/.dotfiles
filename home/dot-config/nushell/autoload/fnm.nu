@@ -1,12 +1,14 @@
-load-env (fnm env --shell bash
-    | lines
-    | str replace 'export ' ''
-    | str replace -a '"' ''
-    | split column "="
-    | rename name value
-    | where name != "FNM_ARCH" and name != "PATH"
-    | reduce -f {} {|it, acc| $acc | upsert $it.name $it.value }
-)
+if (which fnm | is-not-empty) {
+    load-env (fnm env --shell bash
+        | lines
+        | str replace 'export ' ''
+        | str replace -a '"' ''
+        | split column "="
+        | rename name value
+        | where name != "FNM_ARCH" and name != "PATH"
+        | reduce -f {} {|it, acc| $acc | upsert $it.name $it.value }
+    )
 
-$env.path ++= [($env.FNM_MULTISHELL_PATH | path join "bin")]
+    $env.path ++= [($env.FNM_MULTISHELL_PATH | path join "bin")]
+}
 
