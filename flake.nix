@@ -27,6 +27,7 @@
         git
         github-cli
         tmux
+        sesh
         yazi
         ghostty
         nushell
