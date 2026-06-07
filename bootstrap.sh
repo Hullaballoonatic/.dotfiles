@@ -116,6 +116,8 @@ if [[ "$SKIP_INSTALL" == false ]]; then
       tree-sitter-cli
     )
 
+    mkdir "$HOME/.local/npm-global"
+
     log "Refreshing package database..."
     sudo pacman -Sy --noconfirm
 
