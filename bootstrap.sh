@@ -112,23 +112,16 @@ if [[ "$SKIP_INSTALL" == false ]]; then
 
     PACKAGES=(
       ghostty
-      stow
       tree-sitter-cli
     )
-
-    mkdir "$HOME/.local/npm-global"
-    npm config set prefix "$HOME/.local/npm-global"
-
     log "Refreshing package database..."
     sudo pacman -Sy --noconfirm
 
     log "Installing packages: ${PACKAGES[*]}"
     sudo pacman -S --needed --noconfirm "${PACKAGES[@]}"
 
-    log "Installing packages: ${AUR_PACKAGES[*]}"
-    yay -S --needed --noconfirm "${AUR_PACKAGES[@]}"
-
-    curl -fsSL https://pyenv.run | bash
+    mkdir "$HOME/.local/npm-global"
+    npm config set prefix "$HOME/.local/npm-global"
   fi
 
 else

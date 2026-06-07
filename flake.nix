@@ -34,6 +34,7 @@
         neovim
         topgrade
         nodejs
+        stow
       ];
     };
   };
