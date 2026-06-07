@@ -21,6 +21,7 @@
         htop
         ncdu
         fzf
+        zoxide
         atuin
         starship
         carapace
