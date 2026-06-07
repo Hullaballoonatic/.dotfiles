@@ -29,7 +29,6 @@
         tmux
         sesh
         yazi
-        ghostty
         nushell
         neovim
         topgrade
