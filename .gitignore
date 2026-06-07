@@ -2,4 +2,6 @@
 history.txt
 *.BAK
 lazy-lock.json
+result
+result-*
 
