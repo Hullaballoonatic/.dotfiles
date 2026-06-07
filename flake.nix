@@ -34,8 +34,8 @@
         nushell
         neovim
         topgrade
+        tree-sitter
         nodejs
-        tree-sitter-cli
       ];
     };
   };
