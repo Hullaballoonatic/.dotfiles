@@ -17,6 +17,22 @@
         ripgrep
         fd
         jq
+        wget
+        htop
+        ncdu
+        fzf
+        atuin
+        starship
+        carapace
+        git
+        github-cli
+        tmux
+        yazi
+        ghostty
+        nushell
+        neovim
+        topgrade
+        nodejs
       ];
     };
   };
