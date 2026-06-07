@@ -117,6 +117,7 @@ if [[ "$SKIP_INSTALL" == false ]]; then
     )
 
     mkdir "$HOME/.local/npm-global"
+    npm config set prefix "$HOME/.local/npm-global"
 
     log "Refreshing package database..."
     sudo pacman -Sy --noconfirm
