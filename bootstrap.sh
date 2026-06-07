@@ -108,19 +108,61 @@ if [[ "$SKIP_INSTALL" == false ]]; then
       abort "This bootstrap script currently only supports Arch or Arch-based distros."
     fi
 
-    log "Arch or Arch-like distro detected. Using pacman."
+    if [[ -r /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]]; then
+      # shellcheck disable=SC1091
+      . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+    fi
 
-    PACKAGES=(
-      ghostty # troublesome from flake because does not play well with GTK. hopefully addressed soon...
-      tree-sitter-cli # not sure if i can move this to the flake or if i even need it...
-    )
-    log "Refreshing package database..."
-    sudo pacman -Sy --noconfirm
+    if ! command -v nix >/dev/null 2>&1; then
+      log "Installing Nix..."
+      nix_installer="$(mktemp)"
+      trap 'rm -f "$nix_installer"' EXIT
+      curl -fsSL https://nixos.org/nix/install -o "$nix_installer"
+      sh "$nix_installer" --daemon
 
-    log "Installing packages: ${PACKAGES[*]}"
-    sudo pacman -S --needed --noconfirm "${PACKAGES[@]}"
+      if [[ -r /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]]; then
+        # shellcheck disable=SC1091
+        . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+      fi
+    fi
 
-    mkdir "$HOME/.local/npm-global"
+    if ! command -v nix >/dev/null 2>&1; then
+      abort "Nix is not available after installation."
+    fi
+
+    NIX_INSTALLABLE="path:$REPO_DIR#core"
+    NIX_FEATURES=(--extra-experimental-features 'nix-command flakes')
+
+    current_core_store_path="$(
+      nix profile list 2>/dev/null | awk '
+        /^Name:[[:space:]]+core$/ { in_core = 1; next }
+        in_core && /^Store paths:/ { print $3; exit }
+        in_core && NF == 0 { in_core = 0 }
+      '
+    )"
+
+    desired_core_store_path="$(
+      nix "${NIX_FEATURES[@]}" build --no-link --print-out-paths "$NIX_INSTALLABLE" | tail -n 1
+    )"
+
+    if [[ -n "$current_core_store_path" && "$current_core_store_path" == "$desired_core_store_path" ]]; then
+      log "Nix profile core is already up to date."
+    else
+      if [[ -n "$current_core_store_path" ]]; then
+        log "Removing existing core profile entry..."
+        nix "${NIX_FEATURES[@]}" profile remove core
+      fi
+
+      log "Installing core packages into the Nix profile..."
+      nix "${NIX_FEATURES[@]}" profile add "$NIX_INSTALLABLE"
+    fi
+
+    # Ghostty is a temporary Linux exception for now.
+    # NixOS should make this cleaner later, but the Nix build hits GTK/OpenGL issues here.
+    log "Installing Ghostty via pacman..."
+    sudo pacman -S --needed --noconfirm ghostty
+
+    mkdir -p "$HOME/.local/npm-global"
     npm config set prefix "$HOME/.local/npm-global"
   fi
 

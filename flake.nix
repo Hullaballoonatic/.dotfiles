@@ -27,6 +27,7 @@
         carapace
         git
         github-cli
+        stow
         tmux
         sesh
         yazi
@@ -34,7 +35,7 @@
         neovim
         topgrade
         nodejs
-        stow
+        tree-sitter-cli
       ];
     };
   };
