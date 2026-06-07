@@ -10,6 +10,7 @@ $env.PATH = (
   $env.PATH
   | prepend $"($env.HOME)/.nix-profile/bin"
   | prepend "/nix/var/nix/profiles/default/bin"
+  | prepend $"($env.HOME)/.local/npm-global/bin"
   | uniq
 )
 

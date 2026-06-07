@@ -111,23 +111,9 @@ if [[ "$SKIP_INSTALL" == false ]]; then
     log "Arch or Arch-like distro detected. Using pacman."
 
     PACKAGES=(
-      atuin
-      fnm
       ghostty
-      htop
-      neovim
-      nushell
-      starship
       stow
       tree-sitter-cli
-      yazi
-      zoxide
-    )
-
-    AUR_PACKAGES=(
-      carapace-bin
-      sesh-bin
-      topgrade
     )
 
     log "Refreshing package database..."
