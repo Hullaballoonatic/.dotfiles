@@ -111,8 +111,8 @@ if [[ "$SKIP_INSTALL" == false ]]; then
     log "Arch or Arch-like distro detected. Using pacman."
 
     PACKAGES=(
-      ghostty
-      tree-sitter-cli
+      ghostty # troublesome from flake because does not play well with GTK. hopefully addressed soon...
+      tree-sitter-cli # not sure if i can move this to the flake or if i even need it...
     )
     log "Refreshing package database..."
     sudo pacman -Sy --noconfirm
