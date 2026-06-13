@@ -157,10 +157,14 @@ if [[ "$SKIP_INSTALL" == false ]]; then
       nix "${NIX_FEATURES[@]}" profile add "$NIX_INSTALLABLE"
     fi
 
+    AUR_PACKAGES=(
+      ghostty
+      kdeconnect
+    )
     # Ghostty is a temporary Linux exception for now.
     # NixOS should make this cleaner later, but the Nix build hits GTK/OpenGL issues here.
     log "Installing Ghostty via pacman..."
-    sudo pacman -S --needed --noconfirm ghostty
+    sudo pacman -S --needed --noconfirm "${AUR_PACKAGES[@]}"
 
     mkdir -p "$HOME/.local/npm-global"
     npm config set prefix "$HOME/.local/npm-global"
