@@ -159,7 +159,12 @@ if [[ "$SKIP_INSTALL" == false ]]; then
 
     AUR_PACKAGES=(
       ghostty
+      hyprland
       kdeconnect
+      noctalia-shell
+      scrcpy
+      steam
+      sunshine # needs an additional repo added to be found...
     )
     # Ghostty is a temporary Linux exception for now.
     # NixOS should make this cleaner later, but the Nix build hits GTK/OpenGL issues here.
