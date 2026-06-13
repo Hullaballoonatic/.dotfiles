@@ -1,9 +1,15 @@
 $env.config.show_banner = false
-$env.EDITOR = 'nvim'
+$env.EDITOR = $"(which nvim | get path.0)"
 
-# starship (terminal line)
-mkdir ($nu.data-dir | path join "vendor/autoload")
+# mkdir ($nu.data-dir | path join "vendor/autoload")
+
+# terminal line
 starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
+
+# smarter cd
+zoxide init nushell | save -f ($nu.data-dir | path join "vendor/autoload/zoxide.nu")
+
+# source ~/.zoxide.nu
 
 # nix path config. don't know why this does not work in autoload...
 $env.PATH = (
