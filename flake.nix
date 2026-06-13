@@ -14,28 +14,28 @@
       name = "core";
 
       paths = with pkgs; [
-        ripgrep
-        fd
-        jq
-        bat
-        wget
-        htop
-        ncdu
-        fzf
-        zoxide
-        atuin
-        starship
-        carapace
-        git
-        github-cli
-        stow
-        tmux
-        yazi
-        nushell
-        neovim
-        topgrade
-        tree-sitter
-        nodejs
+          atuin
+          bat
+          carapace
+          fd
+          jq
+          fzf
+          git
+          github-cli
+          htop
+          neovim
+          ncdu
+          nodejs
+          nushell
+          ripgrep
+          starship
+          stow
+          tmux
+          topgrade
+          tree-sitter
+          wget
+          yazi
+          zoxide
       ];
     };
   };
