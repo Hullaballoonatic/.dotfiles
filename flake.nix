@@ -17,6 +17,7 @@
         ripgrep
         fd
         jq
+        bat
         wget
         htop
         ncdu
@@ -29,7 +30,6 @@
         github-cli
         stow
         tmux
-        sesh
         yazi
         nushell
         neovim

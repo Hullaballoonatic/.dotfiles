@@ -63,13 +63,13 @@ if [[ "$SKIP_INSTALL" == false ]]; then
     # CLI tools via brew formulae
     BREW_FORMULAE=(
       atuin
+      bat
       carapace
       fnm
       htop
       neovim
       nushell
       pyenv
-      sesh
       starship
       stow
       topgrade
