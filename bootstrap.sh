@@ -70,6 +70,7 @@ if [[ "$SKIP_INSTALL" == false ]]; then
       neovim
       nushell
       pyenv
+      sesh
       starship
       stow
       topgrade
@@ -157,10 +158,10 @@ if [[ "$SKIP_INSTALL" == false ]]; then
       nix "${NIX_FEATURES[@]}" profile add "$NIX_INSTALLABLE"
     fi
 
-    AUR_PACKAGES=(
+    PACKAGES=(
       ghostty
       hyprland
-      kdeconnect
+      kdeconnect-kde
       noctalia-shell
       scrcpy
       steam
@@ -169,7 +170,7 @@ if [[ "$SKIP_INSTALL" == false ]]; then
     # Ghostty is a temporary Linux exception for now.
     # NixOS should make this cleaner later, but the Nix build hits GTK/OpenGL issues here.
     log "Installing Ghostty via pacman..."
-    sudo pacman -S --needed --noconfirm "${AUR_PACKAGES[@]}"
+    sudo pacman -S --needed --noconfirm "${PACKAGES[@]}"
 
     mkdir -p "$HOME/.local/npm-global"
     npm config set prefix "$HOME/.local/npm-global"

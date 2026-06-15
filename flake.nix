@@ -28,6 +28,7 @@
           nodejs
           nushell
           ripgrep
+          sesh
           starship
           stow
           tmux
