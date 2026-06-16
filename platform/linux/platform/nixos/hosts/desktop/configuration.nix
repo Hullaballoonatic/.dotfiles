@@ -1,0 +1,181 @@
+{ pkgs, inputs, hostname, username, ... }:
+
+{
+  imports = [
+    ./hardware-configuration.nix
+  ];
+
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nixpkgs.config.allowUnfree = true;
+
+  networking.hostName = hostname;
+  networking.networkmanager.enable = true;
+
+  time.timeZone = "America/Chicago";
+  i18n.defaultLocale = "en_US.UTF-8";
+  console.keyMap = "us";
+
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
+  hardware.cpu.amd.updateMicrocode = true;
+  hardware.graphics.enable = true;
+  hardware.graphics.enable32Bit = true;
+  hardware.bluetooth.enable = true;
+
+  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.nvidia = {
+    modesetting.enable = true;
+    open = true;
+    nvidiaSettings = true;
+  };
+
+  security.rtkit.enable = true;
+  security.polkit.enable = true;
+  security.sudo.wheelNeedsPassword = true;
+
+  services.openssh.enable = true;
+  services.udisks2.enable = true;
+  services.flatpak.enable = true;
+
+  services.upower.enable = true;
+  services.power-profiles-daemon.enable = true;
+  services.gnome.evolution-data-server.enable = true;
+
+  services.greetd = {
+    enable = true;
+    settings = {
+      default_session = {
+        user = "greeter";
+        command = "${pkgs.tuigreet}/bin/tuigreet --cmd start-hyprland --remember --remember-session --user-menu";
+      };
+      initial_session = {
+        user = username;
+        command = "start-hyprland";
+      };
+    };
+  };
+
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+  };
+
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-gtk
+      xdg-desktop-portal-hyprland
+    ];
+  };
+
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    jack.enable = true;
+  };
+
+  services.sunshine = {
+    enable = true;
+    autoStart = true;
+    capSysAdmin = true;
+    openFirewall = true;
+  };
+
+  programs.kdeconnect.enable = true;
+  programs.steam.enable = true;
+  programs.gamemode.enable = true;
+  programs.gamescope.enable = true;
+
+  users.defaultUserShell = pkgs.nushell;
+  users.users.${username} = {
+    isNormalUser = true;
+    description = "Casey";
+    shell = pkgs.nushell;
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+      "audio"
+      "video"
+      "input"
+      "dialout"
+    ];
+  };
+
+  fonts.packages = with pkgs; [
+    nerd-fonts.jetbrains-mono
+    noto-fonts
+    noto-fonts-cjk
+    noto-fonts-emoji
+    noto-fonts-extra
+  ];
+
+  environment.systemPackages = with pkgs; [
+    # dotfile/bootstrap
+    git
+    stow
+
+    # terminal/core
+    atuin
+    bat
+    carapace
+    fd
+    fzf
+    gh
+    htop
+    jq
+    ncdu
+    neovim
+    nushell
+    ripgrep
+    starship
+    tmux
+    topgrade
+    tree-sitter-cli
+    unzip
+    wget
+    yazi
+    zoxide
+
+    # gui apps
+    ghostty
+    vesktop
+    scrcpy
+    protonup-qt
+    nvidia-settings
+
+    # language/editor tooling
+    lua-language-server
+    stylua
+    rust-analyzer
+    pyright
+    typescript-language-server
+    nixd
+    alejandra
+
+    # flakes
+    inputs.codex-nix.packages.${pkgs.system}.default
+    inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
+    inputs.vicinae.packages.${pkgs.stdenv.hostPlatform.system}.default
+
+    # Noctalia with calendar support
+    (inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
+      calendarSupport = true;
+    })
+  ];
+
+  environment.sessionVariables = {
+    EDITOR = "nvim";
+    VISUAL = "nvim";
+    BROWSER = "zen-browser";
+    TERMINAL = "ghostty";
+    MOZ_ENABLE_WAYLAND = "1";
+    NIXOS_OZONE_WL = "1";
+    QT_QPA_PLATFORM = "wayland;xcb";
+    GTK_USE_PORTAL = "1";
+  };
+
+  system.stateVersion = "25.05";
+}

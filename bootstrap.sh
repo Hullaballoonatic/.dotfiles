@@ -98,84 +98,78 @@ if [[ "$SKIP_INSTALL" == false ]]; then
   # Linux (Arch / Arch-based) branch
   # ----------------------------------------
   if [[ "$OS" == "Linux" ]]; then
-    if [[ -r /etc/os-release ]]; then
-      # shellcheck disable=SC1091
-      source /etc/os-release
-    else
-      abort "/etc/os-release not found; cannot determine distro."
-    fi
-
-    if [[ "${ID:-}" != "arch" && "${ID_LIKE:-}" != *"arch"* ]]; then
-      abort "This bootstrap script currently only supports Arch or Arch-based distros."
-    fi
-
-    if [[ -r /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]]; then
-      # shellcheck disable=SC1091
-      . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
-    fi
-
-    if ! command -v nix >/dev/null 2>&1; then
-      log "Installing Nix..."
-      nix_installer="$(mktemp)"
-      trap 'rm -f "$nix_installer"' EXIT
-      curl -fsSL https://nixos.org/nix/install -o "$nix_installer"
-      sh "$nix_installer" --daemon
-
+    source /etc/os-release
+    
+    if [[ "${ID:-}" == "nixos" ]]; then
+      log "Detected NixOS."
+      # we needn't do anything for nix
+    elif [[ "${ID:-}" == "arch" || "${ID_LIKE:-}" == *"arch"* ]]; then
       if [[ -r /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]]; then
         # shellcheck disable=SC1091
         . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
       fi
-    fi
 
-    if ! command -v nix >/dev/null 2>&1; then
-      abort "Nix is not available after installation."
-    fi
+      if ! command -v nix >/dev/null 2>&1; then
+        log "Installing Nix..."
+        nix_installer="$(mktemp)"
+        trap 'rm -f "$nix_installer"' EXIT
+        curl -fsSL https://nixos.org/nix/install -o "$nix_installer"
+        sh "$nix_installer" --daemon
 
-    NIX_INSTALLABLE="path:$REPO_DIR#core"
-    NIX_FEATURES=(--extra-experimental-features 'nix-command flakes')
-
-    current_core_store_path="$(
-      nix profile list 2>/dev/null | awk '
-        /^Name:[[:space:]]+core$/ { in_core = 1; next }
-        in_core && /^Store paths:/ { print $3; exit }
-        in_core && NF == 0 { in_core = 0 }
-      '
-    )"
-
-    desired_core_store_path="$(
-      nix "${NIX_FEATURES[@]}" build --no-link --print-out-paths "$NIX_INSTALLABLE" | tail -n 1
-    )"
-
-    if [[ -n "$current_core_store_path" && "$current_core_store_path" == "$desired_core_store_path" ]]; then
-      log "Nix profile core is already up to date."
-    else
-      if [[ -n "$current_core_store_path" ]]; then
-        log "Removing existing core profile entry..."
-        nix "${NIX_FEATURES[@]}" profile remove core
+        if [[ -r /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]]; then
+          # shellcheck disable=SC1091
+          . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+        fi
       fi
 
-      log "Installing core packages into the Nix profile..."
-      nix "${NIX_FEATURES[@]}" profile add "$NIX_INSTALLABLE"
+      if ! command -v nix >/dev/null 2>&1; then
+        abort "Nix is not available after installation."
+      fi
+
+      NIX_INSTALLABLE="path:$REPO_DIR/platform/linux/platform/arch/#core"
+      NIX_FEATURES=(--extra-experimental-features 'nix-command flakes')
+
+      current_core_store_path="$(
+        nix profile list 2>/dev/null | awk '
+          /^Name:[[:space:]]+core$/ { in_core = 1; next }
+          in_core && /^Store paths:/ { print $3; exit }
+          in_core && NF == 0 { in_core = 0 }
+        '
+      )"
+
+      desired_core_store_path="$(
+        nix "${NIX_FEATURES[@]}" build --no-link --print-out-paths "$NIX_INSTALLABLE" | tail -n 1
+      )"
+
+      if [[ -n "$current_core_store_path" && "$current_core_store_path" == "$desired_core_store_path" ]]; then
+        log "Nix profile core is already up to date."
+      else
+        if [[ -n "$current_core_store_path" ]]; then
+          log "Removing existing core profile entry..."
+          nix "${NIX_FEATURES[@]}" profile remove core
+        fi
+
+        log "Installing core packages into the Nix profile..."
+        nix "${NIX_FEATURES[@]}" profile add "$NIX_INSTALLABLE"
+      fi
+
+      PACKAGES=(
+        ghostty
+        hyprland
+        kdeconnect
+        noctalia-shell
+        scrcpy
+        steam
+        sunshine # needs an additional repo added to pacman configuration...
+      )
+      # Ghostty is a temporary Linux exception for now.
+      # NixOS should make this cleaner later, but the Nix build hits GTK/OpenGL issues here.
+      log "Installing AUR packages via pacman..."
+      sudo pacman -S --needed --noconfirm "${PACKAGES[@]}"
+    else
+      abort "This bootstrap script currently only supports Arch or Arch-based distros."
     fi
-
-    PACKAGES=(
-      ghostty
-      hyprland
-      kdeconnect-kde
-      noctalia-shell
-      scrcpy
-      steam
-      sunshine # needs an additional repo added to be found...
-    )
-    # Ghostty is a temporary Linux exception for now.
-    # NixOS should make this cleaner later, but the Nix build hits GTK/OpenGL issues here.
-    log "Installing Ghostty via pacman..."
-    sudo pacman -S --needed --noconfirm "${PACKAGES[@]}"
-
-    mkdir -p "$HOME/.local/npm-global"
-    npm config set prefix "$HOME/.local/npm-global"
   fi
-
 else
   log "Skipping installation steps (--skip-install flag detected)."
 fi

@@ -16,8 +16,8 @@ starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.n
 # smarter cd with z
 zoxide init nushell | save -f ($nu.data-dir | path join "vendor/autoload/zoxide.nu")
 
-# nix path config. don't know why this does not work in autoload...
 # not necessary for macOS
+# nix path config
 $env.PATH = (
   $env.PATH
   | prepend ($env.HOME | path join "/.nix-profile/bin")

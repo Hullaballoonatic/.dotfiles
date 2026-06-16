@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    codex-nix.url = "github:SecBear/codex-nix";
   };
 
   outputs = { self, nixpkgs }:
@@ -37,6 +38,7 @@
           wget
           yazi
           zoxide
+          inputs.codex-nix.packages.${pkgs.system}.default
       ];
     };
   };

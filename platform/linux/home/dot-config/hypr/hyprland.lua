@@ -42,8 +42,8 @@ local browser     = "zen-browser"
 -- Autostart necessary processes (like notifications daemons, status bars, etc.)
 -- Or execute your favorite apps at launch like this:
 hl.on("hyprland.start", function ()
-    hl.exec_cmd("qs -c noctalia-shell")
-    hl.exec_cmd("vicinae server")
+    hl.exec_cmd("qs -c noctalia-shell") -- remove after home manager swap
+    hl.exec_cmd("vicinae server") -- remove after home manager swap
     hl.exec_cmd("udiskie")
     hl.exec_cmd("kdeconnectd")
     hl.exec_cmd("kdeconnect-indicator")
@@ -347,4 +347,3 @@ suppressMaximizeRule:set_enabled(false)
 --     no_anim = true,
 -- })
 -- overlayLayerRule:set_enabled(false)
-
