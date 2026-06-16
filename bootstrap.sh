@@ -157,15 +157,18 @@ if [[ "$SKIP_INSTALL" == false ]]; then
         ghostty
         hyprland
         kdeconnect
-        noctalia-shell
         scrcpy
         steam
         sunshine # needs an additional repo added to pacman configuration...
       )
-      # Ghostty is a temporary Linux exception for now.
-      # NixOS should make this cleaner later, but the Nix build hits GTK/OpenGL issues here.
       log "Installing packages via pacman..."
       sudo pacman -S --needed --noconfirm "${PACKAGES[@]}"
+
+      AUR_PACKAGES=(
+        noctalia-shell
+      )
+      log "Installing AUR packages via yay..."
+      yay -S --needed --noconfirm "${AUR_PACKAGES[@]}"
     else
       abort "This bootstrap script currently only supports Arch or Arch-based distros."
     fi
