@@ -157,9 +157,11 @@ if [[ "$SKIP_INSTALL" == false ]]; then
         ghostty
         hyprland
         kdeconnect
+        protonup-qt
         scrcpy
         steam
         sunshine # needs an additional repo added to pacman configuration...
+        vesktop
       )
       log "Installing packages via pacman..."
       sudo pacman -S --needed --noconfirm "${PACKAGES[@]}"

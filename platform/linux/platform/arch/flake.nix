@@ -19,14 +19,13 @@
           bat
           carapace
           fd
-          jq
           fzf
           git
           github-cli
           htop
-          neovim
+          jq
           ncdu
-          nodejs
+          neovim
           nushell
           ripgrep
           sesh

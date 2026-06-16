@@ -130,6 +130,7 @@
     neovim
     nushell
     ripgrep
+    sesh
     starship
     tmux
     topgrade
@@ -141,10 +142,10 @@
 
     # gui apps
     ghostty
-    vesktop
-    scrcpy
-    protonup-qt
     nvidia-settings
+    protonup-qt
+    scrcpy
+    vesktop
 
     # language/editor tooling
     lua-language-server
