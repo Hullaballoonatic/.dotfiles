@@ -164,7 +164,7 @@ if [[ "$SKIP_INSTALL" == false ]]; then
       )
       # Ghostty is a temporary Linux exception for now.
       # NixOS should make this cleaner later, but the Nix build hits GTK/OpenGL issues here.
-      log "Installing AUR packages via pacman..."
+      log "Installing packages via pacman..."
       sudo pacman -S --needed --noconfirm "${PACKAGES[@]}"
     else
       abort "This bootstrap script currently only supports Arch or Arch-based distros."
