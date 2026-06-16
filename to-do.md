@@ -3,6 +3,7 @@
 ## bugs
 
 - sesh not working on linux. maybe an issue with nix?
+- bootstrap.sh for arch does not remove packages no longer included in flake.nix
 
 ## nix-migration
 
