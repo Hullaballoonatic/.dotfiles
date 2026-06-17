@@ -18,6 +18,12 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  filesystems."/mnt/games" = {
+    device = "/dev/disk/by-uuid/d41b96be-10b5-4d3b-ac04-6d81ec4323b4";
+    fsType = "ext4";
+    options = [ "nofail" "x-systemd.autmount" ];
+  };
+
   hardware.cpu.amd.updateMicrocode = true;
   hardware.graphics.enable = true;
   hardware.graphics.enable32Bit = true;
@@ -139,6 +145,9 @@
     wget
     yazi
     zoxide
+
+    # utilities
+    udiskie
 
     # gui apps
     ghostty
