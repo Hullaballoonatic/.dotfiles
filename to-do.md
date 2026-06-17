@@ -1,25 +1,18 @@
 # To-Do
 
-## bugs
-
-priority: hi
-
-- sesh not working on linux. maybe an issue with nix?
-
 ## platform/linux/platform/nixos
 
 priority: hi
 
 - test things in a vm.
-- somehow include the mounting of my drives in the configuration.
-i don't know how to do that yet...
 
 ## overlap
 
 priority: lo
 
-- some path settings not necessary for macOS in the nu.config.
-- some env variable settings not necessary for nixOS in the nu.config.
+- some env variable settings not necessary for nixOS in the nu.config, tho
+it doesn't hurt, i just don't like specifying an environment variable, nixOS
+doesn't need set.
 
 ## refactor
 
