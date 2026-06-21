@@ -1,8 +1,9 @@
-{ pkgs, inputs, linuxRoot, hostname, username, ... }:
+{ pkgs, inputs, hostname, username, ... }:
 
 {
   imports = [
     ./hardware-configuration.nix
+    ./secrets.local.nix
   ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -18,7 +19,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  filesystems."/mnt/games" = {
+  fileSystems."/mnt/games" = {
     device = "/dev/disk/by-uuid/d41b96be-10b5-4d3b-ac04-6d81ec4323b4";
     fsType = "ext4";
     options = [ "nofail" "x-systemd.autmount" ];
@@ -95,7 +96,7 @@
   programs.gamemode.enable = true;
   programs.gamescope.enable = true;
 
-  users.defaultUserShell = pkgs.nushell;
+  users.mutableUsers = false;
   users.users.${username} = {
     isNormalUser = true;
     description = "Casey";

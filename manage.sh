@@ -63,7 +63,7 @@ macos() {
 
 nixos() {
   log "Rebuilding NixOS configurration..."
-  sudo nixos-rebuild switch --flake "$REPO_DIR/os/linux/distro/nixos"
+  sudo nixos-rebuild switch --flake "$REPO_DIR/os/linux#desktop"
 }
 
 arch() {
@@ -72,7 +72,6 @@ arch() {
     hyprland
     kdeconnect
     nvidia-settings
-    scrcpy
     steam
     sunshine
   )
@@ -162,7 +161,7 @@ update() {
   case "$OS:$DISTRO" in
     linux:nixos)
       log "Updating NixOS flake..."
-      nix flake update "$REPO_DIR/os/linux/distro/nixos"
+      nix flake update "$REPO_DIR/os/linux#desktop"
 
       nixos
       ;;
@@ -176,7 +175,7 @@ update() {
 }
 
 case "$COMMAND" in
-  bootstrap) bootstrap ;;
+  bootstrap) bootstrap ;
   apply) apply ;;
   update) update ;;
   *) abort "Usage: $0 [bootstrap|apply|update]" ;;

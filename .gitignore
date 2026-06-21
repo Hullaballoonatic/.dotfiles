@@ -5,4 +5,4 @@ history.txt
 *.BAK
 result
 result-*
-
+secrets.local.nix
