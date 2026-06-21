@@ -10,6 +10,4 @@ priority: hi
 
 priority: lo
 
-- some env variable settings not necessary for nixOS in the nu.config, tho
-it doesn't hurt, i just don't like specifying an environment variable, nixOS
-doesn't need set.
+- a tagging system because there's a duplicate file between arch and macos
