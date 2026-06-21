@@ -120,37 +120,14 @@ arch() {
 
   has nix || abort "Nix is not available after installation."
 
-  local installable features current desired
+  local installable
 
-  installable="path:$REPO_DIR/os/linux/distro/arch#core"
-  features=(--extra-experimental-features 'nix-command flakes')
+  installable="path:$REPO_DIR/os/linux#core"
 
-  current="$(
-    nix profile list 2>/dev/null |
-      awk '
-        /^Name:[[:space:]]+core$/ { in_core = 1; next }
-        in_core && /^Store paths:/ { print $3; exit }
-        in_core && NF == 0 { in_core = 0 }
-      '
-  )"
-
-  desired="$(
-    nix "${features[@]}" build --no-link --print-out-paths --show-trace "$installable" |
-      tail -n 1
-  )"
-
-  if [[ -n "$current" && "$current" == "$desired" ]]; then
-    log "Nix profile core is already up to date."
-    return 0
-  fi
-
-  if [[ -n "$current" ]]; then
-    log "Removing existing core profile entry..."
-    nix "${features[@]}" profile remove core
-  fi
+  nix profile remove core 2>/dev/null || true
 
   log "Installing core packages into the Nix profile..."
-  nix "${features[@]}" profile add "$installable"
+  nix profile add "$installable"
 }
 
 bootstrap() {
