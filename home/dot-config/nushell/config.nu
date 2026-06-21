@@ -1,5 +1,4 @@
 $env.config.show_banner = false
-$env.EDITOR = $"(which nvim | get path.0)" # won't be necessary for nixOS
 
 mkdir ($nu.data-dir | path join "vendor/autoload")
 
