@@ -1,4 +1,4 @@
-{ pkgs, inputs, hostname, username, ... }:
+{ pkgs, inputs, linuxRoot, hostname, username, ... }:
 
 {
   imports = [
@@ -118,63 +118,22 @@
     noto-fonts-extra
   ];
 
-  environment.systemPackages = with pkgs; [
-    # dotfile/bootstrap
-    git
-    stow
+  environment.systemPackages = 
+    (import "${linuxRoot}/packages/core.nix" { inherit pkgs inputs; })
+    ++
+    (with pkgs; [
+      # gui apps
+      ghostty
 
-    # terminal/core
-    atuin
-    bat
-    carapace
-    fd
-    fzf
-    gh
-    htop
-    jq
-    ncdu
-    neovim
-    nushell
-    ripgrep
-    sesh
-    starship
-    tmux
-    topgrade
-    tree-sitter-cli
-    unzip
-    wget
-    yazi
-    zoxide
+      # flakes
+      inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
+      inputs.vicinae.packages.${pkgs.stdenv.hostPlatform.system}.default
 
-    # utilities
-    udiskie
-
-    # gui apps
-    ghostty
-    nvidia-settings
-    protonup-qt
-    scrcpy
-    vesktop
-
-    # language/editor tooling
-    lua-language-server
-    stylua
-    rust-analyzer
-    pyright
-    typescript-language-server
-    nixd
-    alejandra
-
-    # flakes
-    inputs.codex-nix.packages.${pkgs.system}.default
-    inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
-    inputs.vicinae.packages.${pkgs.stdenv.hostPlatform.system}.default
-
-    # Noctalia with calendar support
-    (inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
-      calendarSupport = true;
-    })
-  ];
+      # Noctalia with calendar support
+      (inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
+        calendarSupport = true;
+      })
+    ]);
 
   environment.sessionVariables = {
     EDITOR = "nvim";
@@ -189,3 +148,4 @@
 
   system.stateVersion = "25.05";
 }
+

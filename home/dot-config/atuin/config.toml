@@ -170,7 +170,6 @@
 ## If set to false, both enter and tab will place the command in the prompt for editing.
 ## This applies for new installs. Old installs will keep the old behaviour unless configured otherwise.
 enter_accept = true
-search_mode = "daemon-fuzzy"
 
 ## Defaults to false. If enabled, when triggered after &&, || or |, Atuin will complete commands to chain rather than replace the current line.
 # command_chaining = false
@@ -266,11 +265,11 @@ records = true
 
 [daemon]
 ## Enables using the daemon to sync.
-enabled = true
+# enabled = false
 
 ## Automatically start and manage the daemon when needed.
 ## Not compatible with `systemd_socket = true`.
-autostart = true
+# autostart = false
 
 ## How often the daemon should sync in seconds
 # sync_frequency = 300
@@ -292,10 +291,7 @@ autostart = true
 ## The port that should be used for TCP on non unix systems
 # tcp_port = 8889
 
-[ai]
-enabled = true
-
-[theme]
+# [theme]
 ## Color theme to use for rendering in the terminal.
 ## There are some built-in themes, including the base theme ("default"),
 ## "autumn" and "marine". You can add your own themes to the "./themes" subdirectory of your
@@ -323,7 +319,7 @@ enabled = true
 ## Set to false to disable the popup.
 ## This can also be controlled with the ATUIN_TMUX_POPUP environment variable.
 ## Note: The tmux popup is currently supported in zsh, bash, and fish shells. This currently doesn't work with iTerm native tmux integration.
-enabled = true
+# enabled = false
 
 ## Width of the tmux popup window
 ## Can be a percentage, or integer (e.g. "100" means 100 characters wide)

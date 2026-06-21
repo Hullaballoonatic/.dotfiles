@@ -20,6 +20,7 @@
         inherit system;
         specialArgs = {
           inherit inputs hostname username;
+          linuxRoot = ../..;
         };
         modules = [
           ./hosts/${hostname}/configuration.nix
@@ -29,3 +30,4 @@
       formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
     };
 }
+
