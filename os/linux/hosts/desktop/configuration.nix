@@ -101,6 +101,7 @@
     isNormalUser = true;
     description = "Casey";
     shell = pkgs.nushell;
+    hashedPasswordFile = ./${username}-password.hash;
     extraGroups = [
       "wheel"
       "networkmanager"
