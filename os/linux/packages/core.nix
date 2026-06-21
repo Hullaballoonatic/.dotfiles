@@ -37,8 +37,6 @@ with pkgs; [
   nixd
 
   # gui apps
-  nvidia-settings
-  protonup-qt # proton version manager
   scrcpy # control android phone 
   vesktop # discord but not shit
 

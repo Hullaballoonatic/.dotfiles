@@ -71,6 +71,7 @@ arch() {
     ghostty
     hyprland
     kdeconnect
+    nvidia-settings
     scrcpy
     steam
     sunshine
@@ -134,7 +135,7 @@ arch() {
   )"
 
   desired="$(
-    nix "${features[@]}" build --no-link --print-out-paths "$installable" |
+    nix "${features[@]}" build --no-link --print-out-paths --show-trace "$installable" |
       tail -n 1
   )"
 
