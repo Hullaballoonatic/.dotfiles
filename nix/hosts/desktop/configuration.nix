@@ -158,10 +158,13 @@
 
   systemd.user.services.vicinae = {
     description = "Vicinae";
-    wantedBy = [ "graphical-session.target" ];
+    wantedBy = [ "default.target" ];
     serviceConfig = {
-      ExecStart = "${inputs.vicinae.packages.${pkgs.system}.default}/bin/vicinae";
-      Environment = "USE_LAYER_SHELL=1";
+      ExecStart = "${inputs.vicinae.packages.${pkgs.system}.default}/bin/vicinae server";
+      Environment = [
+        "USE_LAYER_SHELL=1"
+        "PATH=/run/wrappers/bin:/run/current-system/sw/bin:/etc/profiles/per-user/${username}/bin"
+      ];
       Restart = "on-failure";
     };
   };
