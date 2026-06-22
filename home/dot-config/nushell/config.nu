@@ -1,4 +1,5 @@
 $env.config.show_banner = false
+$env.PATH ++= [($env.HOME | path join ".local/bin")]
 
 mkdir ($nu.data-dir | path join "vendor/autoload")
 
