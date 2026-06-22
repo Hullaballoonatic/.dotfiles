@@ -5,5 +5,4 @@ history.txt
 *.BAK
 result
 result-*
-*-password.hash
 
