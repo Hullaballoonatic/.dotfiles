@@ -148,6 +148,7 @@
 
       # flakes
       inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
+      inputs.vicinae.packages.${pkgs.stdenv.hostPlatform.system}.default
 
       # Noctalia with calendar support
       (inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
