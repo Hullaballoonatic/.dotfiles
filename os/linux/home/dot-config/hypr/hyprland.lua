@@ -31,7 +31,7 @@ hl.monitor({
 local terminal    = "ghostty"
 -- local fileManager = "dolphin"
 local menu        = "vicinae toggle"
-local browser     = "zen-browser"
+local browser     = "zen" -- on arch it's zen-browser
 
 -------------------
 ---- AUTOSTART ----
@@ -42,7 +42,7 @@ local browser     = "zen-browser"
 -- Autostart necessary processes (like notifications daemons, status bars, etc.)
 -- Or execute your favorite apps at launch like this:
 hl.on("hyprland.start", function ()
-    hl.exec_cmd("qs -c noctalia-shell") -- remove after home manager swap
+    hl.exec_cmd("noctalia-shell") -- on arch it's qs -c noctalia-shell
     hl.exec_cmd("vicinae server") -- remove after home manager swap
     hl.exec_cmd("udiskie")
     hl.exec_cmd("kdeconnectd")

@@ -123,6 +123,9 @@
     (import ../../packages/core.nix { inherit pkgs inputs; })
     ++
     (with pkgs; [
+      # compilers
+      gcc
+
       # gui apps
       ghostty
       protonup-qt

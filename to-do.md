@@ -1,10 +1,8 @@
 # To-Do
 
-## platform/linux/platform/nixos
+## differentiate
 
-priority: hi
-
-- test things in a vm.
+- some configurations for hyprland will differ between arch and nixOS, so break them out into separate files.
 
 ## overlap
 
