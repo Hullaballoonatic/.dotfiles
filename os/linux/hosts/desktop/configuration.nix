@@ -148,13 +148,22 @@
 
       # flakes
       inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
-      inputs.vicinae.packages.${pkgs.stdenv.hostPlatform.system}.default
 
       # Noctalia with calendar support
       (inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
         calendarSupport = true;
       })
     ]);
+
+  systemd.user.services.vicinae = {
+    description = "Vicinae";
+    wantedBy = [ "graphical-session.target" ];
+    serviceConfig = {
+      ExecStart = "${inputs.vicinae.packages.${pkgs.system}.default}/bin/vicinae";
+      Environment = "USE_LAYER_SHELL=1";
+      Restart = "on-failure";
+    };
+  };
 
   environment.sessionVariables = {
     EDITOR = "nvim";

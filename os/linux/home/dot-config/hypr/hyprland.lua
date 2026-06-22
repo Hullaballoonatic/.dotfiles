@@ -28,26 +28,39 @@ hl.monitor({
 ---------------------
 
 -- Set programs that you use
-local terminal    = "ghostty"
--- local fileManager = "dolphin"
-local menu        = "vicinae toggle"
-local browser     = "zen" -- on arch it's zen-browser
+programs = {
+    terminal = "ghostty",
+    menu     = "vicinae toggle",
+    browser  = "zen",
+}
 
 -------------------
 ---- AUTOSTART ----
 -------------------
+autostart = {
+    "noctalia-shell",
+    "udiskie",
+    "kdeconnectd",
+    "kdeconnect-indicator",
+    "sunshine",
+}
+
+local override = os.getenv("HOME") .. "/.config/hypr/hyprland.local.lua"
+local f = io.open(override, "r")
+if f then
+    f:close()
+    dofile(override)
+end
 
 -- See https://wiki.hypr.land/Configuring/Basics/Autostart/
 
 -- Autostart necessary processes (like notifications daemons, status bars, etc.)
 -- Or execute your favorite apps at launch like this:
+
 hl.on("hyprland.start", function ()
-    hl.exec_cmd("noctalia-shell") -- on arch it's qs -c noctalia-shell
-    hl.exec_cmd("vicinae server") -- remove after home manager swap
-    hl.exec_cmd("udiskie")
-    hl.exec_cmd("kdeconnectd")
-    hl.exec_cmd("kdeconnect-indicator")
-    hl.exec_cmd("sunshine")
+    for _, cmd in ipairs(autostart) do
+        hl.exec_cmd(cmd)
+    end
 end)
 
 
@@ -260,16 +273,16 @@ hl.device({
 local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
-hl.bind(mainMod .. " + T", hl.dsp.exec_cmd(terminal))
+hl.bind(mainMod .. " + T", hl.dsp.exec_cmd(programs.terminal))
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 -- hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
-hl.bind(mainMod .. " + space", hl.dsp.exec_cmd(menu))
+hl.bind(mainMod .. " + space", hl.dsp.exec_cmd(programs.menu))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + R", hl.dsp.layout("togglesplit"))    -- dwindle only
 hl.bind(mainMod .. " + return", hl.dsp.window.fullscreen())
-hl.bind(mainMod .. " + Z", hl.dsp.exec_cmd(browser))
+hl.bind(mainMod .. " + Z", hl.dsp.exec_cmd(programs.browser))
 
 hl.bind(mainMod .. " + left",  hl.dsp.focus({ direction = "left" }))
 hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
