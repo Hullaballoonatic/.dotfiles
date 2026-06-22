@@ -73,7 +73,7 @@ macos() {
 
 nixos() {
   log "Rebuilding NixOS configurration..."
-  sudo nixos-rebuild switch --flake "$REPO_DIR/os/linux#desktop"
+  sudo nixos-rebuild switch --flake "$REPO_DIR/nix#desktop"
 }
 
 arch() {
@@ -131,7 +131,7 @@ arch() {
 
   local installable
 
-  installable="path:$REPO_DIR/os/linux#core"
+  installable="path:$REPO_DIR/nix#core"
 
   nix profile remove core 2>/dev/null || true
 
@@ -153,9 +153,9 @@ bootstrap() {
 
 apply() {
   printf '%s\n' \
-    "$REPO_DIR" \
-    "$REPO_DIR/os/$OS" \
-    "$REPO_DIR/os/$OS/distro/$DISTRO" |
+    "$REPO_DIR/stow" \
+    "$REPO_DIR/stow/os/$OS" \
+    "$REPO_DIR/stow/os/$OS/distro/$DISTRO" |
     while IFS= read -r dir; do
       [[ -d "$dir/home" ]] || continue
 
@@ -171,7 +171,7 @@ update() {
   case "$OS:$DISTRO" in
     linux:nixos)
       log "Updating NixOS flake..."
-      nix flake update "$REPO_DIR/os/linux#desktop"
+      nix flake update "$REPO_DIR/nix#desktop"
 
       nixos
       ;;
