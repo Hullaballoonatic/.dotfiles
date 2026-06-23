@@ -1,5 +1,8 @@
 # To-Do
 
+## bugs
+nvim linters borked. failing to install. check health and address issues.
+
 ## overlap
 
 priority: lo
