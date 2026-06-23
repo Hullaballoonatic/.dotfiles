@@ -126,30 +126,6 @@
             ],
             "right": [
                 {
-                    "blacklist": [
-                    ],
-                    "chevronColor": "none",
-                    "colorizeIcons": false,
-                    "drawerEnabled": true,
-                    "hidePassive": false,
-                    "id": "Tray",
-                    "pinned": [
-                    ]
-                },
-                {
-                    "displayMode": "onhover",
-                    "iconColor": "none",
-                    "id": "Bluetooth",
-                    "textColor": "none"
-                },
-                {
-                    "displayMode": "onhover",
-                    "iconColor": "none",
-                    "id": "Volume",
-                    "middleClickCommand": "pwvucontrol || pavucontrol",
-                    "textColor": "none"
-                },
-                {
                     "compactMode": false,
                     "hideMode": "hidden",
                     "hideWhenIdle": false,
@@ -166,21 +142,23 @@
                     "visualizerType": "linear"
                 },
                 {
-                    "clockColor": "none",
-                    "customFont": "",
-                    "formatHorizontal": "HH:mm ddd, MMM dd",
-                    "formatVertical": "HH mm - dd MM",
-                    "id": "Clock",
-                    "tooltipFormat": "HH:mm ddd, MMM dd",
-                    "useCustomFont": false
-                },
-                {
                     "hideWhenZero": true,
                     "hideWhenZeroUnread": false,
                     "iconColor": "none",
                     "id": "NotificationHistory",
                     "showUnreadBadge": true,
                     "unreadBadgeColor": "primary"
+                },
+                {
+                    "blacklist": [
+                    ],
+                    "chevronColor": "none",
+                    "colorizeIcons": false,
+                    "drawerEnabled": true,
+                    "hidePassive": false,
+                    "id": "Tray",
+                    "pinned": [
+                    ]
                 },
                 {
                     "defaultSettings": {
@@ -192,6 +170,28 @@
                     "defaultSettings": {
                     },
                     "id": "plugin:kde-connect"
+                },
+                {
+                    "displayMode": "onhover",
+                    "iconColor": "none",
+                    "id": "Bluetooth",
+                    "textColor": "none"
+                },
+                {
+                    "displayMode": "onhover",
+                    "iconColor": "none",
+                    "id": "Volume",
+                    "middleClickCommand": "pwvucontrol || pavucontrol",
+                    "textColor": "none"
+                },
+                {
+                    "clockColor": "none",
+                    "customFont": "",
+                    "formatHorizontal": "HH:mm ddd, MMM dd",
+                    "formatVertical": "HH mm - dd MM",
+                    "id": "Clock",
+                    "tooltipFormat": "HH:mm ddd, MMM dd",
+                    "useCustomFont": false
                 }
             ]
         }
