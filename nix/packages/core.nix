@@ -29,6 +29,9 @@ with pkgs; [
   udiskie
 
   # LSPs
+  bash-language-server
+  marksman
+  vscode-langservers-extracted
   stylua
   lua-language-server
   rust-analyzer
