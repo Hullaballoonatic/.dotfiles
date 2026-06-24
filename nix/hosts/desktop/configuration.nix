@@ -16,6 +16,8 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.allowUnfree = true;
 
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
   networking.hostName = hostname;
   networking.networkmanager.enable = true;
 
@@ -188,4 +190,3 @@
 
   system.stateVersion = "25.05";
 }
-
