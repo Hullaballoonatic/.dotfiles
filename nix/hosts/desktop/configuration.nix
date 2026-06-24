@@ -136,7 +136,7 @@
   ];
 
   environment.systemPackages = 
-    (import ../../packages/core.nix { inherit pkgs inputs; })
+    (import ../../packages/core.nix { inherit pkgs; })
     ++
     (with pkgs; [
       # compilers
@@ -145,10 +145,13 @@
       # gui apps
       ghostty
       protonup-qt
+      scrcpy # control android phone 
+      vesktop # discord but not shit
 
       # flakes
       inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
       inputs.vicinae.packages.${pkgs.stdenv.hostPlatform.system}.default
+      inputs.codex-nix.packages.${pkgs.stdenv.hostPlatform.system}.default # openai's terminal agentic ai
 
       # Noctalia with calendar support
       (inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default.override {

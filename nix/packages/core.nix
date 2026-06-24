@@ -1,4 +1,4 @@
-{ pkgs, inputs }:
+{ pkgs }:
 
 with pkgs; [
   # bootstrap
@@ -31,19 +31,8 @@ with pkgs; [
   # LSPs
   bash-language-server
   marksman
-  vscode-langservers-extracted
   stylua
   lua-language-server
-  rust-analyzer
-  pyright
-  typescript-language-server
   nixd
-
-  # gui apps
-  scrcpy # control android phone 
-  vesktop # discord but not shit
-
-  # flakes
-  inputs.codex-nix.packages.${pkgs.stdenv.hostPlatform.system}.default # openai's terminal agentic ai
 ]
 

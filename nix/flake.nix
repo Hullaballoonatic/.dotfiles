@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
     codex-nix.url = "github:SecBear/codex-nix";
     noctalia.url = "github:noctalia-dev/noctalia/legacy-v4";
     vicinae.url = "github:vicinaehq/vicinae";
@@ -10,32 +11,62 @@
   };
 
   outputs = inputs@{ nixpkgs, ... }:
-  let
-    system = "x86_64-linux";
-    pkgs = import nixpkgs { inherit system; };
-    hostname = "desktop";
-    username = "casey";
-  in {
-    packages.${system}.core = pkgs.buildEnv {
-      name = "core";
-      paths =
-        (import ./packages/core.nix { inherit pkgs inputs; })
-        ++
-        (with pkgs; [
-          topgrade
-        ]);
-    };
+    let
+      lib = nixpkgs.lib;
+      username = "casey";
 
-    nixosConfigurations.${hostname} = nixpkgs.lib.nixosSystem {
-      inherit system;
-      specialArgs = {
-        inherit inputs hostname username;
+      hosts = {
+        desktop = {
+          system = "x86_64-linux";
+        };
+
+        pi = {
+          system = "aarch64-linux";
+        };
       };
-      modules = [
-        ./hosts/${hostname}/configuration.nix
-      ];
-    };
 
-    formatter.${system} = pkgs.alejandra;
-  };
+      pkgsFor = system:
+        import nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+        };
+
+      mkSystem = hostname:
+        let
+          host = hosts.${hostname};
+        in
+          lib.nixosSystem {
+            system = host.system;
+
+            specialArgs = {
+              inherit inputs hostname username;
+            };
+
+            modules = [
+              ./hosts/${hostname}/configuration.nix
+            ];
+          };
+    in {
+      nixosConfigurations =
+        lib.mapAttrs (hostname: _: mkSystem hostname) hosts;
+
+      formatter =
+        lib.mapAttrs (_: host: (pkgsFor host.system).alejandra) hosts;
+
+      templates = {
+        rust = {
+          path = ./templates/rust;
+          description = "Rust development environment";
+        };
+        python = {
+          path = ./templates/python;
+          description = "Python development environment";
+        };
+        web = {
+          path = ./templates/web;
+          description = "Web development environment";
+        };
+      };
+    };
 }
+
