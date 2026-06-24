@@ -142,6 +142,9 @@
       # compilers
       gcc
 
+      # utilities
+      bubblewrap # wanted by codex
+
       # gui apps
       ghostty
       protonup-qt
