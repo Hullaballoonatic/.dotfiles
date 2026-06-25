@@ -72,7 +72,7 @@ macos() {
 
 nixos() {
   log "Rebuilding NixOS configurration..."
-  sudo nixos-rebuild switch --flake "$REPO_DIR/nix#desktop"
+  sudo nixos-rebuild switch --flake "$REPO_DIR/nix#$(hostname)"
 }
 
 arch() {
