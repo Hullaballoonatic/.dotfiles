@@ -8,7 +8,10 @@
   networking.hostName = hostname;
   time.timeZone = "America/Chicago";
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings = {
+    experimental-features = [ "nix-command" "flakes" ];
+    trusted-users = [ "root" username ];
+  };
 
   hardware.enableRedistributableFirmware = true;
 
@@ -46,6 +49,11 @@
     enable = true;
     nssmdns4 = true;
     openFirewall = true;
+    publish = {
+      enable = true;
+      addresses = true;
+      workstation = true;
+    };
   };
 
   networking.firewall.allowedTCPPorts = [
