@@ -59,6 +59,11 @@
   security.sudo.wheelNeedsPassword = true;
 
   services.openssh.enable = true;
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+  };
   services.udisks2.enable = true;
   services.flatpak.enable = true;
 
