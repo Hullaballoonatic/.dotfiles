@@ -71,7 +71,7 @@ macos() {
 }
 
 nixos() {
-  log "Rebuilding NixOS configurration..."
+  log "Rebuilding NixOS configuration..."
   sudo nixos-rebuild switch --flake "$REPO_DIR/nix#$(hostname)"
 }
 
