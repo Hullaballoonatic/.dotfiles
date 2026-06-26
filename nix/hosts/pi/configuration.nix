@@ -33,7 +33,7 @@
   services.openssh = {
     enable = true;
     settings = {
-      PasswordAuthentication = true; # set false after SSH key works
+      PasswordAuthentication = false;
       PermitRootLogin = "no";
     };
   };

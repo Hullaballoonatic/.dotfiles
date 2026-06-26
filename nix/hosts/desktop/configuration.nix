@@ -20,6 +20,24 @@
 
   networking.hostName = hostname;
   networking.networkmanager.enable = true;
+  networking.firewall = {
+    enable = true;
+
+    allowedTCPPorts = [
+      47984
+      47989
+      47990
+      48010
+    ];
+
+    allowedUDPPorts = [
+      47998
+      47999
+      48000
+      48002
+      48010
+    ];
+  };
 
   time.timeZone = "America/Chicago";
   i18n.defaultLocale = "en_US.UTF-8";
