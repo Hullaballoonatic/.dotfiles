@@ -20,6 +20,17 @@
 
   networking.hostName = hostname;
   networking.networkmanager.enable = true;
+  systemd.services.enable-wake-on-lan = {
+    description = "Enable Wake-on-LAN for the wired interface";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.ethtool}/bin/ethtool -s enp9s0 wol g";
+      RemainAfterExit = true;
+    };
+  };
+
   networking.firewall = {
     enable = true;
 
@@ -169,6 +180,7 @@
 
       # utilities
       bubblewrap # wanted by codex
+      ethtool
 
       # gui apps
       ghostty

@@ -25,7 +25,8 @@
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" ];
     openssh.authorizedKeys.keys = [
-			"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHNvlOFyYFiaJi7qFgpy0fJxqEsMAGtJZDsNZYVCYPHe casey@desktop"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHNvlOFyYFiaJi7qFgpy0fJxqEsMAGtJZDsNZYVCYPHe casey@desktop"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBNKTwzKqcPY2HyTlYFXkaX8WqaMXXHzYyHOrZBekdec casey@pixel"
     ];
   };
 
@@ -40,6 +41,7 @@
   };
 
   services.tailscale.enable = true;
+  services.tailscale.extraUpFlags = [ "--ssh" ];
 
   services.adguardhome = {
     enable = true;
@@ -76,6 +78,9 @@
 			curl
 			wget
 			wakeonlan
+      (writeShellScriptBin "wake-desktop" ''
+        exec ${wakeonlan}/bin/wakeonlan a8:a1:59:6f:72:d5
+      '')
 		]);
 
   nix.gc = {
