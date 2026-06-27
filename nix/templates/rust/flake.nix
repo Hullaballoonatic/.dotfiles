@@ -12,10 +12,16 @@
         packages = with pkgs; [
           rustc
           cargo
+          cargo-edit
+          cargo-watch
           rust-analyzer
           clippy
           rustfmt
+          pkg-config
+          openssl
         ];
+
+        RUST_BACKTRACE = "1"; # panics become less opaque
       };
     };
 }
