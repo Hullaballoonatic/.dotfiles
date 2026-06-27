@@ -5,24 +5,34 @@
 
   outputs = { nixpkgs, ... }:
     let
-      system = builtins.currentSystem;
-      pkgs = import nixpkgs { inherit system; };
-    in {
-      devShells.${system}.default = pkgs.mkShell {
-        packages = with pkgs; [
-          rustc
-          cargo
-          cargo-edit
-          cargo-watch
-          rust-analyzer
-          clippy
-          rustfmt
-          pkg-config
-          openssl
-        ];
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "aarch64-darwin"
+      ];
 
-        RUST_BACKTRACE = "1"; # panics become less opaque
-      };
+      forAllSystems = nixpkgs.lib.genAttrs systems;
+    in {
+      devShells = forAllSystems (system:
+        let
+          pkgs = import nixpkgs { inherit system; };
+        in {
+          default = pkgs.mkShell {
+            packages = with pkgs; [
+              rustc
+              cargo
+              cargo-edit
+              cargo-watch
+              rust-analyzer
+              clippy
+              rustfmt
+              pkg-config
+              openssl
+            ];
+
+            RUST_BACKTRACE = "1"; # panics become less opaque
+          };
+        });
     };
 }
-
