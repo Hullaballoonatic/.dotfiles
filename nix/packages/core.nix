@@ -9,6 +9,7 @@ with pkgs; [
   atuin # history
   bat # cat replacement
   carapace # autocompletions
+  direnv # per-project environment loader
   fd # find replacement
   fzf # fuzzy finding
   gh # github cli and authentiaction
@@ -35,4 +36,3 @@ with pkgs; [
   lua-language-server
   nixd
 ]
-
