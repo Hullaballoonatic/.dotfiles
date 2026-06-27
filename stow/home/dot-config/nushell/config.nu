@@ -1,5 +1,9 @@
 $env.config.show_banner = false
-$env.PATH ++= [($env.HOME | path join ".local/bin")]
+$env.PATH = (
+  $env.PATH
+    | split row (char esep)
+    | append ($env.HOME | path join ".local/bin")
+)
 
 mkdir ($nu.data-dir | path join "vendor/autoload")
 
@@ -17,7 +21,3 @@ starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.n
 # smarter cd with z
 zoxide init nushell | save -f ($nu.data-dir | path join "vendor/autoload/zoxide.nu")
 
-# per-project environments
-if (which direnv | is-not-empty) {
-  direnv hook nu | save -f ($nu.data-dir | path join "vendor/autoload/direnv.nu")
-}
