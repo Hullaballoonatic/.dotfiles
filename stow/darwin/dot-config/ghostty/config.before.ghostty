@@ -1,0 +1,4 @@
+env = XDG_CONFIG_HOME=/Users/CaseyStratton/.config/
+env = PATH=/opt/homebrew/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+env = EDITOR=nvim
+

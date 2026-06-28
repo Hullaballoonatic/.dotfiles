@@ -88,6 +88,7 @@
   security.sudo.wheelNeedsPassword = true;
 
   services.openssh.enable = true;
+  
   services.avahi = {
     enable = true;
     nssmdns4 = true;
@@ -166,6 +167,9 @@
       "video"
       "input"
       "dialout"
+    ];
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGGzdglPRmtwQ0i7Jv1uA9V8N6fuIFHp3jcfLzkdCn5D pi"
     ];
   };
 

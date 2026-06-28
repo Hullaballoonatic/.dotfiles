@@ -32,7 +32,9 @@ with pkgs; [
   # LSPs
   bash-language-server
   marksman
+  markdownlint-cli2
   stylua
   lua-language-server
   nixd
+  yaml-language-server
 ]

@@ -2,6 +2,8 @@
 set -euo pipefail
 
 COMMAND="${1:-apply}"
+LOCAL_HOST=$(hostname)
+TARGET="${2:-$LOCAL_HOST}"
 SCRIPT_PATH="${BASH_SOURCE[0]}"
 
 while [[ -L "$SCRIPT_PATH" ]]; do
@@ -64,8 +66,31 @@ macos() {
 }
 
 nixos() {
-  log "Rebuilding NixOS configuration..."
-  sudo nixos-rebuild switch --flake "$REPO_DIR/nix#$(hostname)"
+  log "Rebuilding NixOS configuration for $TARGET..."
+
+  local args=(
+    switch
+    --flake "$REPO_DIR/nix#$TARGET"
+  )
+
+  case "$LOCAL_HOST:$TARGET" in
+    desktop:desktop)
+      ;;
+
+    desktop:pi)
+      args+=(--target-host "casey@pi.local")
+      ;;
+
+    pi:*)
+      args+=(--build-host "casey@desktop.local")
+      ;;
+
+    *)
+      abort "Unsupported rebuild path: local=$LOCAL_HOST target=$TARGET"
+      ;;
+  esac
+
+  sudo nixos-rebuild "${args[@]}"
 }
 
 bootstrap() {
@@ -100,7 +125,7 @@ stow_target_path() {
 
 remove_conflicting_symlinks() {
   local dir="$1"
-  local source_root="$dir/home"
+  local source_root="$dir"
   local source target rel source_real target_real
 
   [[ -d "$source_root" ]] || return 0
@@ -122,28 +147,24 @@ remove_conflicting_symlinks() {
 }
 
 apply() {
-  printf '%s\n' \
-    "$REPO_DIR/stow" \
-    "$REPO_DIR/stow/os/$OS" \
-    "$REPO_DIR/stow/os/$OS/distro/$DISTRO" |
-    while IFS= read -r dir; do
-      [[ -d "$dir/home" ]] || continue
+  for package in common "$OS"; do
+    [[ -d "$REPO_DIR/stow/$package" ]] || continue
 
-      log "Preparing $dir"
-      remove_conflicting_symlinks "$dir"
+    log "Preparing $package"
+    remove_conflicting_symlinks "$REPO_DIR/stow/$package"
 
-      log "Stowing $dir"
-      stow -d "$dir" -t "$HOME" -R --adopt --no-folding --dotfiles home
-    done
+    log "Stowing $package"
+    stow -d "$REPO_DIR/stow" -t "$HOME" -R --no-folding --dotfiles --adopt "$package"
+  done
 
   log "Apply complete."
 }
 
 update() {
-  case "$OS:$DISTRO" in
-    linux:nixos)
+  case "$OS" in
+    linux)
       log "Updating NixOS flake..."
-      nix flake update "$REPO_DIR/nix#desktop"
+      nix flake update "$REPO_DIR/nix#$TARGET"
 
       nixos
       ;;
@@ -156,10 +177,15 @@ update() {
   log "Update complete."
 }
 
+restart_services() {
+  systemctl --user restart vicinae.service || true
+}
+
 case "$COMMAND" in
   bootstrap) bootstrap ;;
   apply) apply ;;
   update) update ;;
+  restart) restart_services ;;
   *) abort "Usage: $0 [bootstrap|apply|update]" ;;
 esac
 
