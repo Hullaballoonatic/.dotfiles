@@ -55,7 +55,15 @@
       
       packages = {
         x86_64-linux.default = mkPackageSet "x86_64-linux" ./packages/linux.nix;
-        aarch64-linux.default = mkPackageSet "aarch64-linux" ./packages/linux.nix;
+        aarch64-linux = {
+          default = mkPackageSet "aarch64-linux" ./packages/linux.nix;
+          home-pi-api = pkgsFor "aarch64-linux".rustPlatform.buildRustPackage {
+            pname = "home-pi-api";
+            version = "0.1.0";
+            src = ../applications/home-pi-api;
+            cargeoLock.lockFile = ../applications/home-pi-api/Cargo.lock;
+          };
+        };
         aarch64-darwin.default = mkPackageSet "aarch64-darwin" ./packages/darwin.nix;
       };
 
