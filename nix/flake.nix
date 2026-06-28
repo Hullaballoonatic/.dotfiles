@@ -8,9 +8,10 @@
     noctalia.url = "github:noctalia-dev/noctalia/legacy-v4";
     vicinae.url = "github:vicinaehq/vicinae";
     zen-browser.url = "github:youwen5/zen-browser-flake";
+    home-pi-api.url = "github:Hullaballoonatic/home-pi-api";
   };
 
-  outputs = inputs@{ nixpkgs, ... }:
+  outputs = inputs@{ self, nixpkgs, ... }:
     let
       lib = nixpkgs.lib;
       username = "casey";
@@ -31,7 +32,7 @@
           config.allowUnfree = true;
         };
 
-      mkSystem = hostname:
+      makeSystem = hostname:
         let
           host = hosts.${hostname};
         in
@@ -41,7 +42,7 @@
             modules = [ ./hosts/${hostname}/configuration.nix ];
           };
 
-      mkPackageSet = system: packageFile:
+      makePackages = system: packageFile:
         let
           pkgs = pkgsFor system;
         in
@@ -51,20 +52,20 @@
           };
     in {
       nixosConfigurations =
-        lib.mapAttrs (hostname: _: mkSystem hostname) hosts;
+        lib.mapAttrs (hostname: _: makeSystem hostname) hosts;
       
       packages = {
-        x86_64-linux.default = mkPackageSet "x86_64-linux" ./packages/linux.nix;
+        x86_64-linux.default = makePackages "x86_64-linux" ./packages/linux.nix;
         aarch64-linux = {
-          default = mkPackageSet "aarch64-linux" ./packages/linux.nix;
-          home-pi-api = pkgsFor "aarch64-linux".rustPlatform.buildRustPackage {
+          default = makePackages "aarch64-linux" ./packages/linux.nix;
+          home-pi-api = (pkgsFor "aarch64-linux").rustPlatform.buildRustPackage {
             pname = "home-pi-api";
             version = "0.1.0";
-            src = ../applications/home-pi-api;
-            cargeoLock.lockFile = ../applications/home-pi-api/Cargo.lock;
+            src = inputs.home-pi-api;
+            cargeLock.lockFile = "${inputs.home-pi-api}/Cargo.lock";
           };
         };
-        aarch64-darwin.default = mkPackageSet "aarch64-darwin" ./packages/darwin.nix;
+        aarch64-darwin.default = makePackages "aarch64-darwin" ./packages/darwin.nix;
       };
 
       formatter =

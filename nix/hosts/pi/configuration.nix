@@ -1,7 +1,7 @@
 { pkgs, inputs, modulesPath, hostname, username, ... }:
 
 let
-  home-pi-api = inputs.self.packages.${pkgs.system}.home-pi-api;
+  home-pi-api = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.home-pi-api;
 in
   {
     imports = [
@@ -112,8 +112,8 @@ in
         Restart = "on-failure";
       };
     };
-    systemd.user.services.home-pi-api = {
-      description = "pi's API";
+    systemd.services.home-pi-api = {
+      description = "API";
 
       wantedBy = [ "multi-user.target" ];
       after = [ "network-online.target" "tailscaled.service" ];
