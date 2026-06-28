@@ -37,6 +37,24 @@
         "type": "github"
       }
     },
+    "home-pi-api": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_2"
+      },
+      "locked": {
+        "lastModified": 1782685144,
+        "narHash": "sha256-7xOtUStk9FuymyogANpQNQDEYmGyzPn6tD4UD0WlLHQ=",
+        "owner": "Hullaballoonatic",
+        "repo": "home-pi-api",
+        "rev": "e2e9aa63e8fd4d73f2f0707b3cad2267edc5b39a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Hullaballoonatic",
+        "repo": "home-pi-api",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1771923393,
@@ -70,6 +88,22 @@
     },
     "nixpkgs_2": {
       "locked": {
+        "lastModified": 1782467914,
+        "narHash": "sha256-pGvFkM8N0xEkIIXDe5YYfbEAvHrk4IxBrjB/x8OomhE=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "e73de5be04e0eff4190a1432b946d469c794e7b4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_3": {
+      "locked": {
         "lastModified": 1779560665,
         "narHash": "sha256-tpyBcxPpcQb8ukyNF7DoCwfSY3VPsxHoYwj00Cayv5o=",
         "owner": "NixOS",
@@ -84,7 +118,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_3": {
+    "nixpkgs_4": {
       "locked": {
         "lastModified": 1780749050,
         "narHash": "sha256-3av0pIjlOWQ6rDbNOmpUSvbNnJkGORQKKjb4LtCZsIY=",
@@ -100,7 +134,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_4": {
+    "nixpkgs_5": {
       "locked": {
         "lastModified": 1772542754,
         "narHash": "sha256-WGV2hy+VIeQsYXpsLjdr4GvHv5eECMISX1zKLTedhdg=",
@@ -116,7 +150,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_5": {
+    "nixpkgs_6": {
       "locked": {
         "lastModified": 1781577229,
         "narHash": "sha256-lrp67w8AulE9Ks53n27I45ADSzbOCn4H+CNW1Ck8B+8=",
@@ -134,7 +168,7 @@
     },
     "noctalia": {
       "inputs": {
-        "nixpkgs": "nixpkgs_3",
+        "nixpkgs": "nixpkgs_4",
         "noctalia-qs": "noctalia-qs"
       },
       "locked": {
@@ -178,7 +212,8 @@
     "root": {
       "inputs": {
         "codex-nix": "codex-nix",
-        "nixpkgs": "nixpkgs_2",
+        "home-pi-api": "home-pi-api",
+        "nixpkgs": "nixpkgs_3",
         "noctalia": "noctalia",
         "vicinae": "vicinae",
         "zen-browser": "zen-browser"
@@ -238,7 +273,7 @@
     },
     "vicinae": {
       "inputs": {
-        "nixpkgs": "nixpkgs_4",
+        "nixpkgs": "nixpkgs_5",
         "systems": "systems_2"
       },
       "locked": {
@@ -257,7 +292,7 @@
     },
     "zen-browser": {
       "inputs": {
-        "nixpkgs": "nixpkgs_5"
+        "nixpkgs": "nixpkgs_6"
       },
       "locked": {
         "lastModified": 1781847955,
