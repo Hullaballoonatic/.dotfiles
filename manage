@@ -14,13 +14,6 @@ done
 REPO_DIR="$(cd -P "$(dirname "$SCRIPT_PATH")" && pwd)"
 
 OS="$(uname -s | tr '[:upper:]' '[:lower:]')"
-DISTRO=""
-
-if [[ "$OS" == linux && -r /etc/os-release ]]; then
-  # shellcheck disable=SC1091
-  . /etc/os-release
-  DISTRO="${ID:-}"
-fi
 
 log() {
   printf '[dotfiles] %s\n' "$*" >&2
@@ -75,75 +68,10 @@ nixos() {
   sudo nixos-rebuild switch --flake "$REPO_DIR/nix#$(hostname)"
 }
 
-arch() {
-  local packages=(
-    ghostty
-    hyprland
-    kdeconnect
-    nvidia-settings
-    steam
-    sunshine
-  )
-
-  local aur_packages=(
-    protonup-qt
-    noctalia-shell
-    vesktop
-  )
-
-  log "Installing packages via pacman..."
-  sudo pacman -S --needed --noconfirm "${packages[@]}"
-
-  has yay || abort "yay is not installed."
-
-  log "Installing AUR packages via yay..."
-  yay -S --needed --noconfirm "${aur_packages[@]}"
-  
-  source_nix() {
-    local nix_daemon=/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
-
-    [[ -r "$nix_daemon" ]] || return 0
-
-    # shellcheck disable=SC1090
-    . "$nix_daemon"
-  }
-
-  install_nix() {
-    local installer
-
-    log "Installing Nix..."
-
-    installer="$(mktemp)"
-    trap 'rm -f "$installer"' RETURN
-
-    curl -fsSL https://nixos.org/nix/install -o "$installer"
-    sh "$installer" --daemon
-  }
-
-  source_nix
-
-  has nix || install_nix
-
-  source_nix
-
-  has nix || abort "Nix is not available after installation."
-
-  local installable
-
-  installable="path:$REPO_DIR/nix#core"
-
-  nix profile remove core 2>/dev/null || true
-
-  log "Installing core packages into the Nix profile..."
-  nix profile add "$installable"
-}
-
 bootstrap() {
-  case "$OS:$DISTRO" in
-    darwin:*) macos ;;
-    linux:arch) arch ;;
-    linux:nixos) nixos ;;
-    linux:*) abort "unsupported distro: $DISTRO" ;;
+  case "$OS" in
+    darwin) macos ;;
+    linux) nixos ;;
     *) abort "Unsupported OS: $OS" ;;
   esac
 
