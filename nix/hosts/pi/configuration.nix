@@ -71,6 +71,10 @@
     5353 # mDNS
   ];
 
+  networking.firewall.interfaces.tailscale0.allowedTCPPorts = [
+    8787
+  ];
+
   environment.systemPackages = 
 		(import ../../packages/core.nix { inherit pkgs; })
 		++ 
