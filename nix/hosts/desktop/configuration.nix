@@ -177,6 +177,8 @@
     noto-fonts-color-emoji
   ];
 
+  hardware.keyboard.zsa.enable = true;
+
   environment.systemPackages = 
     (import ../../packages/core.nix { inherit pkgs; })
     ++
@@ -193,6 +195,7 @@
       protonup-qt
       scrcpy # control android phone 
       vesktop # discord but not shit
+      keymapp # keyboard editing
 
       # flakes
       inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
