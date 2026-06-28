@@ -1,10 +1,11 @@
 # To-Do
 
 ## bugs
-nvim linters borked. failing to install. check health and address issues.
 
-## overlap
+- markdownlint is missing.
 
-priority: lo
+## features
 
-- a tagging system because there's a duplicate file between arch and macos
+- (lo) maybe a tagging system for files rather than directories
+- (md) expand script arguments for building another nix configuration and targetting that platform (pi)
+

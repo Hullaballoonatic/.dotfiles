@@ -31,7 +31,6 @@ with pkgs; [
 
   # LSPs
   bash-language-server
-  markdownlint
   marksman
   stylua
   lua-language-server
