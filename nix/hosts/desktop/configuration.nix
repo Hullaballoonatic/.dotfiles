@@ -184,7 +184,7 @@
   hardware.keyboard.zsa.enable = true;
 
   environment.systemPackages = 
-    (import ../../packages/core.nix { inherit pkgs; })
+    (import ../../packages/linux.nix { inherit pkgs; })
     ++
     (with pkgs; [
       # compilers

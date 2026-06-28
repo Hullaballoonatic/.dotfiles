@@ -37,18 +37,27 @@
         in
           lib.nixosSystem {
             system = host.system;
+            specialArgs = { inherit inputs hostname username; };
+            modules = [ ./hosts/${hostname}/configuration.nix ];
+          };
 
-            specialArgs = {
-              inherit inputs hostname username;
-            };
-
-            modules = [
-              ./hosts/${hostname}/configuration.nix
-            ];
+      mkPackageSet = system: packageFile:
+        let
+          pkgs = pkgsFor system;
+        in
+          pkgs.buildEnv {
+            name = "my-os-packages";
+            paths = import packageFile { inherit pkgs; };
           };
     in {
       nixosConfigurations =
         lib.mapAttrs (hostname: _: mkSystem hostname) hosts;
+      
+      packages = {
+        x86_64-linux.default = mkPackageSet "x86_64-linux" ./packages/linux.nix;
+        aarch64-linux.default = mkPackageSet "aarch64-linux" ./packages/linux.nix;
+        aarch64-darwin.default = mkPackageSet "aarch64-darwin" ./packages/darwin.nix;
+      };
 
       formatter =
         lib.mapAttrs (_: host: (pkgsFor host.system).alejandra) hosts;

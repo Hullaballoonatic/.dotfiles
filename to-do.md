@@ -1,12 +1,10 @@
 # To-Do
 
-## bugs
+## simple
 
-- markdownlint is missing.
+- after running on macOS again, uninstall everything from homebrew that is
+  handled by nix. can move all that stuff...
 
 ## features
 
-- (lo) expand script arguments for building another nix configuration and targetting that platform (pi)
-- (md) migrate macOS package management to nix
-    - (md) replace stow with Home Manager 
-
+- (md) replace stow with Home Manager.

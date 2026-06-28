@@ -23,7 +23,8 @@
 
   users.users.${username} = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" ];
+    linger = true;
+    extraGroups = [ "wheel" "networkmanager" "storage" ];
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHNvlOFyYFiaJi7qFgpy0fJxqEsMAGtJZDsNZYVCYPHe casey@desktop"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBNKTwzKqcPY2HyTlYFXkaX8WqaMXXHzYyHOrZBekdec casey@pixel"
@@ -59,6 +60,8 @@
     };
   };
 
+  services.udisks2.enable = true;
+
   networking.firewall.allowedTCPPorts = [
     22   # SSH
     53   # DNS TCP
@@ -76,7 +79,7 @@
   ];
 
   environment.systemPackages = 
-		(import ../../packages/core.nix { inherit pkgs; })
+		(import ../../packages/linux.nix { inherit pkgs; })
 		++ 
 		(with pkgs; [
 			curl
@@ -96,4 +99,15 @@
   nix.settings.auto-optimise-store = true;
 
   system.stateVersion = "25.11";
+
+  systemd.user.services.udiskie = {
+    description = "Automount removable drives";
+    wantedBy = [ "default.target" ];
+
+    serviceConfig = { 
+      ExecStart = "${pkgs.udiskie}/bin/udiskie";
+      Restart = "on-failure";
+    };
+  };
 }
+

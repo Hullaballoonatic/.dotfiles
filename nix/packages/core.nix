@@ -26,9 +26,6 @@ with pkgs; [
   yazi # file explorer
   zoxide # cd replacement
 
-  # utilities
-  udiskie
-
   # LSPs
   bash-language-server
   marksman
@@ -38,3 +35,4 @@ with pkgs; [
   nixd
   yaml-language-server
 ]
+

@@ -30,6 +30,22 @@ has() {
   command -v "$1" >/dev/null 2>&1
 }
 
+ensure_nix() {
+  if command -v nix >/dev/null 2>&1; then
+    return
+  fi
+
+  log "Installing Nix..."
+  sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) --daemon
+}
+
+darwin() {
+  ensure_nix
+
+  log "Installing packages"
+  nix profile install "$REPO_DIR/nix#darwin"
+}
+
 macos() {
   local formulae=(
     atuin
@@ -95,7 +111,7 @@ nixos() {
 
 bootstrap() {
   case "$OS" in
-    darwin) macos ;;
+    darwin) darwin ;;
     linux) nixos ;;
     *) abort "Unsupported OS: $OS" ;;
   esac
