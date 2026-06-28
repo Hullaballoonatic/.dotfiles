@@ -62,7 +62,7 @@
             pname = "home-pi-api";
             version = "0.1.0";
             src = inputs.home-pi-api;
-            cargeLock.lockFile = "${inputs.home-pi-api}/Cargo.lock";
+            cargoLock.lockFile = "${inputs.home-pi-api}/Cargo.lock";
           };
         };
         aarch64-darwin.default = makePackages "aarch64-darwin" ./packages/darwin.nix;
