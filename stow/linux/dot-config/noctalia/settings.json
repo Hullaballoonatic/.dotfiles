@@ -167,11 +167,6 @@
                     "id": "plugin:screenshot"
                 },
                 {
-                    "defaultSettings": {
-                    },
-                    "id": "plugin:kde-connect"
-                },
-                {
                     "displayMode": "onhover",
                     "iconColor": "none",
                     "id": "Bluetooth",
@@ -192,9 +187,6 @@
                     "id": "Clock",
                     "tooltipFormat": "HH:mm ddd, MMM dd",
                     "useCustomFont": false
-                },
-                {
-                    "id": "plugin:screen-recorder"
                 }
             ]
         }
