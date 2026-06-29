@@ -115,6 +115,8 @@
     };
   };
 
+  programs.gpu-screen-recorder.enable = true;
+
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
