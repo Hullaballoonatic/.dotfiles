@@ -2,6 +2,10 @@
 
 let
   home-pi-api = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.home-pi-api;
+
+  wake-desktop = pkgs.writeShellScriptBin "wake-desktop" ''
+    exec ${pkgs.wakeonlan}/bin/wakeonlan a8:a1:59:6f:72:d5
+  '';
 in
   {
     imports = [
@@ -118,6 +122,10 @@ in
       wantedBy = [ "multi-user.target" ];
       after = [ "network-online.target" "tailscaled.service" ];
       wants = [ "network-online.target" ];
+
+      path = [
+        wake-desktop
+      ];
 
       serviceConfig = {
         ExecStart = "${home-pi-api}/bin/home-pi-api";

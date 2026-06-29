@@ -105,11 +105,7 @@
     enable = true;
     settings = {
       default_session = {
-        user = "greeter";
-        command = "${pkgs.tuigreet}/bin/tuigreet --cmd start-hyprland --remember --remember-session --user-menu";
-      };
-      initial_session = {
-        user = username;
+        user = "username";
         command = "start-hyprland";
       };
     };
@@ -183,6 +179,7 @@
     noto-fonts-color-emoji
   ];
 
+  hardware.steam-hardware.enable = true;
   hardware.keyboard.zsa.enable = true;
 
   environment.systemPackages = 
