@@ -218,7 +218,7 @@
     description = "Vicinae";
     wantedBy = [ "default.target" ];
     serviceConfig = {
-      ExecStart = "${inputs.vicinae.packages.${pkgs.system}.default}/bin/vicinae server";
+      ExecStart = "${inputs.vicinae.packages.${pkgs.stdenv.hostPlatform.system}.default}/bin/vicinae server";
       Environment = [
         "USE_LAYER_SHELL=1"
         "PATH=/run/wrappers/bin:/run/current-system/sw/bin:/etc/profiles/per-user/${username}/bin"
