@@ -182,7 +182,7 @@ update() {
   case "$OS" in
     linux)
       log "Updating NixOS flake..."
-      nix flake update "$REPO_DIR/nix#$TARGET"
+      nix flake update --target "$REPO_DIR/nix#$TARGET"
 
       nixos
       ;;
