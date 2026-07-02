@@ -193,6 +193,13 @@
       bubblewrap # wanted by codex
       ethtool
 
+      # screenshot and clipboard
+      grim
+      slurp
+      wl-clipboard
+      satty
+      hyprshot
+
       # gui apps
       ghostty
       protonup-qt
